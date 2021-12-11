@@ -1,0 +1,13 @@
+.form {
+  display: grid;
+  grid-template-columns: 430px 32px;
+  grid-template-rows: 32px 330px;
+  gap: 8px;
+  grid-template-areas:
+    ". close_icon"
+    "form .";
+  position: fixed;
+  left: calc(50% - 235px);
+  top: calc(50% - 185px);
+  z-index: 2;
+}
