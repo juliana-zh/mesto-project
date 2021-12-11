@@ -1,0 +1,8 @@
+.elements__item {
+  width: 100%;
+  background-color: #FFFFFF;
+  border-radius: 10px;
+  line-height: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+}

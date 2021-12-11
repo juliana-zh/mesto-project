@@ -1,0 +1,7 @@
+.profile {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(2, max-content) 1fr;
+  gap: 30px;
+  align-items: center;
+}

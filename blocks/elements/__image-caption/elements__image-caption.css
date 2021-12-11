@@ -1,0 +1,14 @@
+.elements__image-caption {
+  margin: 25px 15px 31px 21px;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 121%;
+  color: #000000;
+  display: grid;
+  grid-template-columns: 1fr 22px;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5px;
+
+}
