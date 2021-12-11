@@ -6,15 +6,3 @@
   white-space: nowrap;
   overflow: hidden;
 }
-
-/* @media screen and (min-width: 993px) and (max-width: 1180px) {
-  .elements__image-caption-text {
-    max-width: 230px;
-  }
-}
-
-@media screen and (min-width: 320px) and (max-width: 992px) {
-  .elements__list {
-    max-width: 190px;
-  }
-} */
