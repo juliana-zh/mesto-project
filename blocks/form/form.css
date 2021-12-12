@@ -7,8 +7,8 @@
     ". close_icon"
     "form .";
   position: fixed;
-  left: calc(50% - 235px);
-  top: calc(50% - 185px);
+  left: calc(50% - 214px);
+  top: calc(50% - 206px);
   z-index: 2;
 }
 
@@ -21,6 +21,6 @@
     ". close_icon"
     "form form";
     left: calc(50% - 141px);
-    top: calc(50% - 181px);
+    top: calc(50% - 200px);
   }
 }
