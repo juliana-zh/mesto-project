@@ -6,3 +6,11 @@
   line-height: 121%;
   color: #000000;
 }
+
+@media screen and (max-width: 1064px) {
+  .form__title {
+    margin: 17px 22px 48px 22px;
+    font-size: 18px;
+    line-height: 122%;
+  }
+}

@@ -11,3 +11,16 @@
   top: calc(50% - 185px);
   z-index: 2;
 }
+
+@media screen and (max-width: 1064px) {
+  .form {
+    grid-template-columns: 246px 20px;
+    gap: 16px;
+    grid-template-rows: 20px 322px;
+    grid-template-areas:
+    ". close_icon"
+    "form form";
+    left: calc(50% - 141px);
+    top: calc(50% - 181px);
+  }
+}

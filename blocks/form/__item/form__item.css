@@ -17,6 +17,12 @@
   margin: 16px 0 0 0;
 }
 
+@media screen and (max-width: 1064px) {
+  .form__title {
+    padding: 13px 0;
+  }
+}
+
 .form__item::-webkit-input-placeholder {
   font-family: inherit;
   font-style: normal;

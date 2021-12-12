@@ -3,3 +3,9 @@
   padding: 0;
   border: none;
 }
+
+@media screen and (max-width: 1064px) {
+  .form__input-container {
+    margin: 0 22px 45px 22px;
+  }
+}
