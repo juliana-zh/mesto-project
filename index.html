@@ -10,114 +10,109 @@
 
 <body>
   <div class="page">
-    <div class="page__wrapper">
-      <header class="header">
-        <div class="header__logo-container">
-          <img src="./images/mesto_logo.svg" alt="Логотип Место" class="header__logo">
-          <div class="header__line"></div>
+    <header class="header">
+      <div class="header__logo-container">
+        <img src="./images/mesto_logo.svg" alt="Логотип Место" class="header__logo">
+        <div class="header__line"></div>
+      </div>
+    </header>
+    <main class="content">
+      <section class="profile">
+        <img src="./images/avatar.svg" alt="Фотография исследователя Жака-Ив Кусто" class="profile__avatar">
+        <div class="profile__info">
+          <div class="profile__title-wrapper">
+            <h1 class="profile__title">
+              Жак-Ив Кусто
+            </h1>
+            <div class="profile__edit-button">
+            </div>
+          </div>
+          <p class="profile__subtitle">
+            Исследователь океана
+          </p>
         </div>
-      </header>
-      <main class="content">
-        <section class="profile">
-          <img src="./images/avatar.svg" alt="Фотография исследователя Жака-Ив Кусто" class="profile__avatar">
-          <div class="profile__info">
-            <div class="profile__title-wrapper">
-              <h1 class="profile__title">
-                Жак-Ив Кусто
-              </h1>
-              <div class="profile__edit-button">
+        <button class="profile__plus-button" type="button">
+        </button>
+      </section>
+      <section class="elements" aria-label="Элементы">
+        <ul class="elements__list">
+          <li class="elements__item">
+            <div class="elements__image-wrapper">
+              <img src="./images/karachaevsk.jpg" alt="Старинное здание на фоне гор и лесов" class="elements__image">
+              <div class="elements__image-caption">
+                <h2 class="elements__image-caption-text">Карачаевск</h2>
+                <button class="elements__heart elements__heart_status_disabled" type="button"></button>
               </div>
             </div>
-            <p class="profile__subtitle">
-              Исследователь океана
-            </p>
-          </div>
-          <div class="profile__plus-button">
-          </div>
-        </section>
-        <section class="elements" aria-label="elements">
-          <ul class="elements__list">
-            <li class="elements__item">
-              <figure class="elements__image-wrapper">
-                <img src="./images/karachaevsk.jpg" alt="Старинное здание на фоне гор и лесов" class="elements__image">
-                <figcaption class="elements__image-caption">
-                  <p class="elements__image-caption-text">Карачаевск</p>
-                  <div class="elements__heart elements__heart_status_disabled"></div>
-                </figcaption>
-              </figure>
-            </li>
-            <li class="elements__item">
-              <figure class="elements__image-wrapper">
-                <img src="./images/mount_elbrus.jpg" alt="Поле, куст, и вдалеке виднеется гора" class="elements__image">
-                <figcaption class="elements__image-caption">
-                  <p class="elements__image-caption-text">Гора Эльбрус</p>
-                  <div class="elements__heart elements__heart_status_disabled"></div>
-                </figcaption>
-              </figure>
-            </li>
-            <li class="elements__item">
-              <figure class="elements__image-wrapper">
-                <img src="./images/dombay.jpg" alt="Горы, покрытые лесом, и на заднем фоне заснеженная вершина"
-                  class="elements__image">
-                <figcaption class="elements__image-caption">
-                  <p class="elements__image-caption-text">Домбай</p>
-                  <div class="elements__heart elements__heart_status_disabled"></div>
-                </figcaption>
-              </figure>
-            </li>
-            <li class="elements__item">
-              <figure class="elements__image-wrapper">
-                <img src="./images/amazonka.jpg" alt="Вид на реку Амазонку сверху" class="elements__image">
-                <figcaption class="elements__image-caption">
-                  <p class="elements__image-caption-text">Амазонка</p>
-                  <div class="elements__heart elements__heart_status_disabled"></div>
-                </figcaption>
-              </figure>
-            </li>
-            <li class="elements__item">
-              <figure class="elements__image-wrapper">
-                <img src="./images/antarktida.jpg" alt="Ледник и океан" class="elements__image">
-                <figcaption class="elements__image-caption">
-                  <p class="elements__image-caption-text">Антарктида</p>
-                  <div class="elements__heart elements__heart_status_disabled"></div>
-                </figcaption>
-              </figure>
-            </li>
-            <li class="elements__item">
-              <figure class="elements__image-wrapper">
-                <img src="./images/karach-cherk.jpg" alt="Озеро, в котором отражаются горы" class="elements__image">
-                <figcaption class="elements__image-caption">
-                  <p class="elements__image-caption-text">Карачаево-Черкесия</p>
-                  <div class="elements__heart elements__heart_status_disabled"></div>
-                </figcaption>
-              </figure>
-            </li>
-          </ul>
-        </section>
-      </main>
-      <footer class="footer">
-        &copy; 2020 Mesto Russia
-      </footer>
-      <div class="popup">
-        <form class="form">
-          <button class="form__close-icon" type="button">
-          </button>
-          <div class="form__main-container">
-            <h2 class="form__title">
-              Редактировать профиль
-            </h2>
-            <fieldset class="form__input-container">
-              <input type="text" class="form__item form__item_el_name" name="name" placeholder="Жак-Ив Кусто">
-              <input type="text" class="form__item form__item_el_profession" name="profession"
-                placeholder="Исследователь океана">
-            </fieldset>
-            <fieldset class="form__handlers">
-              <input type="submit" class="form__submit-button" value="Сохранить">
-            </fieldset>
-          </div>
-        </form>
-      </div>
-    </div>
+          </li>
+          <li class="elements__item">
+            <div class="elements__image-wrapper">
+              <img src="./images/mount_elbrus.jpg" alt="Поле, куст, и вдалеке виднеется гора" class="elements__image">
+              <div class="elements__image-caption">
+                <h2 class="elements__image-caption-text">Гора Эльбрус</h2>
+                <button class="elements__heart elements__heart_status_disabled" type="button"></button>
+              </div>
+            </div>
+          </li>
+          <li class="elements__item">
+            <div class="elements__image-wrapper">
+              <img src="./images/dombay.jpg" alt="Горы, покрытые лесом, и на заднем фоне заснеженная вершина"
+                class="elements__image">
+              <div class="elements__image-caption">
+                <h2 class="elements__image-caption-text">Домбай</h2>
+                <button class="elements__heart elements__heart_status_disabled" type="button"></button>
+              </div>
+            </div>
+          </li>
+          <li class="elements__item">
+            <div class="elements__image-wrapper">
+              <img src="./images/amazonka.jpg" alt="Вид на реку Амазонку сверху" class="elements__image">
+              <div class="elements__image-caption">
+                <h2 class="elements__image-caption-text">Амазонка</h2>
+                <button class="elements__heart elements__heart_status_disabled" type="button"></button>
+              </div>
+            </div>
+          </li>
+          <li class="elements__item">
+            <div class="elements__image-wrapper">
+              <img src="./images/antarktida.jpg" alt="Ледник и океан" class="elements__image">
+              <div class="elements__image-caption">
+                <h2 class="elements__image-caption-text">Антарктида</h2>
+                <button class="elements__heart elements__heart_status_disabled" type="button"></button>
+              </div>
+            </div>
+          </li>
+          <li class="elements__item">
+            <div class="elements__image-wrapper">
+              <img src="./images/karach-cherk.jpg" alt="Озеро, в котором отражаются горы" class="elements__image">
+              <div class="elements__image-caption">
+                <h2 class="elements__image-caption-text">Карачаево-Черкесия</h2>
+                <button class="elements__heart elements__heart_status_disabled" type="button"></button>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </section>
+    </main>
+    <footer class="footer">
+      &copy; 2020 Mesto Russia
+    </footer>
+    <article class="popup">
+      <form class="form" name="edit_profile">
+        <button class="form__close-icon" type="button">
+        </button>
+        <div class="form__main-container">
+          <h2 class="form__title">
+            Редактировать профиль
+          </h2>
+          <fieldset class="form__input-container">
+            <input type="text" class="form__item form__item_el_name" name="name" placeholder="Имя">
+            <input type="text" class="form__item form__item_el_profession" name="profession" placeholder="Профессия">
+          </fieldset>
+          <button type="submit" class="form__submit-button">Сохранить</button>
+        </div>
+      </form>
+    </article>
   </div>
 </body>
 
