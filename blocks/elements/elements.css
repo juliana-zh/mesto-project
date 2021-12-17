@@ -1,5 +1,7 @@
 .elements {
   padding: 51px 200px 67px 200px;
+  max-width: 880px;
+  margin: 0 auto;
 }
 
 @media screen and (max-width: 684px) and (max-width: 1064px) {
