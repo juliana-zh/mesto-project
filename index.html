@@ -98,6 +98,23 @@
       &copy; 2020 Mesto Russia
     </footer>
     <article class="popup">
+      <form class="form" name="addcard_profile">
+        <button class="form__close-icon" type="button">
+        </button>
+        <div class="form__main-container">
+          <h2 class="form__title">
+            Новое место
+          </h2>
+          <fieldset class="form__input-container">
+            <input type="text" class="form__item form__item_el_name" name="name" placeholder="Название">
+            <input type="text" class="form__item form__item_el_profession" name="profession"
+              placeholder="Ссылка на картинку">
+          </fieldset>
+          <button type="submit" class="form__submit-button">Создать</button>
+        </div>
+      </form>
+    </article>
+    <article class="popup">
       <form class="form" name="edit_profile">
         <button class="form__close-icon" type="button">
         </button>
@@ -114,6 +131,17 @@
       </form>
     </article>
   </div>
+  <template id="card-template">
+    <li class="elements__item">
+      <div class="elements__image-wrapper">
+        <img class="elements__image">
+        <div class="elements__image-caption">
+          <h2 class="elements__image-caption-text"></h2>
+          <button class="elements__heart elements__heart_status_disabled" type="button"></button>
+        </div>
+      </div>
+    </li>
+  </template>
   <script src="script.js"></script>
 </body>
 
