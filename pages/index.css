@@ -20,12 +20,10 @@
 @import url(../blocks/elements/__image/elements__image.css);
 @import url(../blocks/elements/__image-caption/elements__image-caption.css);
 @import url(../blocks/elements/__heart/elements__heart.css);
-@import url(../blocks/elements/__heart/_status/elements__heart_status_active.css);
 @import url(../blocks/elements/__heart/_status/elements__heart_status_disabled.css);
 @import url(../blocks/elements/__image-caption-text/elements__image-caption-text.css);
+@import url(../blocks/elements/__trash/elements__trash.css);
 @import url(../blocks/footer/footer.css);
-@import url(../blocks/popup/popup.css);
-@import url(../blocks/popup/_status/popup_status_opened.css);
 @import url(../blocks/form/form.css);
 @import url(../blocks/form/__close-icon/form__close-icon.css);
 @import url(../blocks/form/__input-container/form__input-container.css);
@@ -33,3 +31,9 @@
 @import url(../blocks/form/__title/form__title.css);
 @import url(../blocks/form/__item/form__item.css);
 @import url(../blocks/form/__submit-button/form__submit-button.css);
+@import url(../blocks/form/__picture-wrapper/form__picture-wrapper.css);
+@import url(../blocks/form/__main-image/form__main-image.css);
+@import url(../blocks/form/_type/form_type_picture.css);
+@import url(../blocks/form/__picture-capture/form__picture-capture.css);
+@import url(../blocks/popup/popup.css);
+@import url(../blocks/popup/_status/popup_status_opened.css);

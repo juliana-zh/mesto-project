@@ -1,0 +1,5 @@
+.form__picture-wrapper {
+  grid-area: form;
+  display: flex;
+  flex-direction: column;
+}
