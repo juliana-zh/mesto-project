@@ -40,9 +40,9 @@ const profileSubtitle = document.querySelector('.profile__subtitle');
 
 const cardContainer = document.querySelector('.elements__list');
 
-const closeButtonAddCardProfile = document.querySelector('.form__close-icon_type_addcard');
-const closeButtonEditProfile = document.querySelector('.form__close-icon_type_editprofile');
-const closeButtonPicture = document.querySelector('.form__close-icon_type_picture');
+const closeButtonAddCardProfile = document.querySelector('.popup__close_type_addcard');
+const closeButtonEditProfile = document.querySelector('.popup__close_type_editprofile');
+const closeButtonPicture = document.querySelector('.popup__close_type_picture');
 
 const editButton = document.querySelector('.profile__edit-button');
 const addNewCardButton = document.querySelector('.profile__plus-button');
@@ -63,18 +63,24 @@ const cardTemplate = document.querySelector('#card-template').content;
 const elementsItem = cardTemplate.querySelector('.elements__item');
 
 function openPopup(popup) {
-  popup.classList.remove('popup__close');
+  popup.classList.add('popup_status_opened');
 }
 
 function closePopup(popup) {
-  popup.classList.add('popup__close');
+  popup.classList.remove('popup_status_opened');
 }
 
-function getCard(title, ref, alt) {
+function getCard(title, ref) {
   const userCard = elementsItem.cloneNode(true);
   const cardImage = userCard.querySelector('.elements__image');
   cardImage.src = ref;
-  cardImage.alt = alt;
+  const len = ref.lastIndexOf('.');
+  if (len > 0) {
+    cardImage.alt = ref.substr(0, len);
+  } else {
+    cardImage.alt = ref;
+  }
+
   userCard.querySelector('.elements__image-caption-text').textContent = title;
 
   const heart = userCard.querySelector('.elements__heart');
@@ -132,7 +138,9 @@ addNewCardButton.addEventListener('click', function (evt) {
 formAddNewCard.addEventListener('submit', function (evt) {
   evt.preventDefault();
   closePopup(popupAddCard);
-  insertCard(getCard(fieldImageName.value.trim(), fieldImageRef.value.trim(), 'Картинка'));
+  insertCard(getCard(fieldImageName.value.trim(), fieldImageRef.value.trim()));
+  fieldImageName.value = "";
+  fieldImageRef.value = "";
 });
 
 closeButtonPicture.addEventListener('click', function (evt) {
