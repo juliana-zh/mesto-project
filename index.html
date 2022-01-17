@@ -42,7 +42,7 @@
     <footer class="footer">
       &copy; 2020 Mesto Russia
     </footer>
-    <article class="popup popup_type_addcard">
+    <article class="popup popup__close popup_type_addcard">
       <form class="form form_type_addcard" name="addcard_profile">
         <button class="form__close-icon form__close-icon_type_addcard" type="button">
         </button>
@@ -58,7 +58,7 @@
         </div>
       </form>
     </article>
-    <article class="popup popup_type_editprofile">
+    <article class="popup popup__close popup_type_editprofile">
       <form class="form form_type_editprofile" name="edit_profile">
         <button class="form__close-icon form__close-icon_type_editprofile" type="button">
         </button>
@@ -74,15 +74,15 @@
         </div>
       </form>
     </article>
-    <article class="popup popup_type_picture">
-      <form class="form form_type_picture" name="picture">
+    <article class="popup popup__close popup_type_picture" aria-label="article">
+      <div class="form form_type_picture">
         <button class="form__close-icon form__close-icon_type_picture" type="button">
         </button>
         <div class="form__picture-wrapper">
-          <img class="form__main-image" alt="Картинка">
+          <img class="form__main-image" alt="Картинка" src="https://example.com/">
           <p class="form__picture-capture"></p>
         </div>
-      </form>
+      </div>
     </article>
   </div>
   <template id="card-template">

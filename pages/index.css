@@ -36,4 +36,4 @@
 @import url(../blocks/form/_type/form_type_picture.css);
 @import url(../blocks/form/__picture-capture/form__picture-capture.css);
 @import url(../blocks/popup/popup.css);
-@import url(../blocks/popup/_status/popup_status_opened.css);
+@import url(../blocks/popup/__close/popup__close.css);
