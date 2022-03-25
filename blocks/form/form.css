@@ -1,7 +1,7 @@
 .form {
   display: grid;
   grid-template-columns: 430px 32px;
-  grid-template-rows: 32px 330px;
+  grid-template-rows: 32px 1fr;
   gap: 8px;
   grid-template-areas:
     ". close_icon"
@@ -18,8 +18,8 @@
     gap: 16px;
     grid-template-rows: 20px 322px;
     grid-template-areas:
-    ". close_icon"
-    "form form";
+      ". close_icon"
+      "form form";
     left: calc(50% - 141px);
     top: calc(50% - 200px);
   }
