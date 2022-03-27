@@ -1,31 +1,40 @@
+import './styles/index.css';
+
+const karachaevsk = new URL('./images/karachaevsk.jpg', import.meta.url);
+const mount_elbrus = new URL('./images/mount_elbrus.jpg', import.meta.url);
+const dombay = new URL('./images/dombay.jpg', import.meta.url);
+const amazonka = new URL('./images/amazonka.jpg', import.meta.url);
+const antarktida = new URL('./images/antarktida.jpg', import.meta.url);
+const karach_cherk = new URL('./images/karach-cherk.jpg', import.meta.url);
+
 const cardsInfo = [
   {
-    src: './images/karachaevsk.jpg',
+    src: karachaevsk,
     alt: 'Старинное здание на фоне гор и лесов',
     captionText: 'Карачаевск',
   },
   {
-    src: './images/mount_elbrus.jpg',
+    src: mount_elbrus,
     alt: 'Поле, куст, и вдалеке виднеется гора',
     captionText: 'Гора Эльбрус',
   },
   {
-    src: './images/dombay.jpg',
+    src: dombay,
     alt: 'Горы, покрытые лесом, и на заднем фоне заснеженная вершина',
     captionText: 'Домбай',
   },
   {
-    src: './images/amazonka.jpg',
+    src: amazonka,
     alt: 'Вид на реку Амазонку сверху',
     captionText: 'Амазонка',
   },
   {
-    src: './images/antarktida.jpg',
+    src: antarktida,
     alt: 'Ледник и океан',
     captionText: 'Антарктида',
   },
   {
-    src: './images/karach-cherk.jpg',
+    src: karach_cherk,
     alt: 'Озеро, в котором отражаются горы',
     captionText: 'Карачаево-Черкесия',
   },

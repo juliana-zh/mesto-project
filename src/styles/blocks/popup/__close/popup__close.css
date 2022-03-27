@@ -2,7 +2,7 @@
   grid-area: close_icon;
   width: 32px;
   height: 32px;
-  background-image: url(../../../images/close_icon.svg);
+  background-image: url(../../../../images/close_icon.svg);
   padding: 0;
   border: none;
   font: inherit;
@@ -20,7 +20,7 @@
   .popup__close {
     width: 20px;
     height: 20px;
-    background-image: url(../../../images/close_icon.svg);
+    background-image: url(../../../../images/close_icon.svg);
     background-size: cover;
   }
 }
