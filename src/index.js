@@ -79,6 +79,12 @@ function closePopup(popup) {
   popup.classList.remove('popup_status_opened');
 }
 
+function closeAllPopups() {
+  closePopup(popupEditProfile);
+  closePopup(popupAddCard);
+  closePopup(popupPicture);
+}
+
 function getCard(title, ref, alt) {
   const userCard = elementsItem.cloneNode(true);
   const cardImage = userCard.querySelector('.elements__image');
@@ -229,9 +235,13 @@ const popupBackgrounds = document.querySelectorAll('.popup__background')
 
 for (let i = 0; i < popupBackgrounds.length; ++i) {
   popupBackgrounds[i].addEventListener('click', function (evt) {
-    closePopup(popupEditProfile);
-    closePopup(popupAddCard);
-    closePopup(popupPicture);
+    closeAllPopups();
   });
 }
+
+document.addEventListener('keydown', function (e) {
+  if (e.key == "Escape") {
+    closeAllPopups();
+  }
+});
 
