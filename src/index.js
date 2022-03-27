@@ -223,6 +223,15 @@ const enableValidation = () => {
 
 enableValidation();
 
+//--------------------------------------------------
 
+const popupBackgrounds = document.querySelectorAll('.popup__background')
 
+for (let i = 0; i < popupBackgrounds.length; ++i) {
+  popupBackgrounds[i].addEventListener('click', function (evt) {
+    closePopup(popupEditProfile);
+    closePopup(popupAddCard);
+    closePopup(popupPicture);
+  });
+}
 

@@ -43,3 +43,4 @@
 @import url(./blocks/form/__submit-button/_type/form__submit-button_type_inactive.css);
 @import url(./blocks/form/__item-error/_type/form__item-error_type_first.css);
 @import url(./blocks/form/__item-error/_type/form__item-error_type_second.css);
+@import url(./blocks/popup/__background/popup__background.css);
