@@ -1,4 +1,7 @@
 import './styles/index.css';
+import enableValidation from './components/validate.js'
+import { popupPicture, getCard, insertCard } from './components/card.js';
+import { openPopup, closePopup, closeAllPopups, popupEditProfile, popupAddCard } from './components/modal.js'
 
 const karachaevsk = new URL('./images/karachaevsk.jpg', import.meta.url);
 const mount_elbrus = new URL('./images/mount_elbrus.jpg', import.meta.url);
@@ -40,14 +43,8 @@ const cardsInfo = [
   },
 ]
 
-const popupEditProfile = document.querySelector('.popup_type_editprofile');
-const popupAddCard = document.querySelector('.popup_type_addcard');
-const popupPicture = document.querySelector('.popup_type_picture');
-
 const profileTitle = document.querySelector('.profile__title');
 const profileSubtitle = document.querySelector('.profile__subtitle');
-
-const cardContainer = document.querySelector('.elements__list');
 
 const closeButtonAddCardProfile = document.querySelector('.popup__close_type_addcard');
 const closeButtonEditProfile = document.querySelector('.popup__close_type_editprofile');
@@ -65,59 +62,13 @@ const fieldImageRef = popupAddCard.querySelector('.form__item_el_ref');
 const formEditProfile = document.querySelector('.form_type_editprofile');
 const formAddNewCard = document.querySelector('.form_type_addcard');
 
-const mainImage = popupPicture.querySelector('.form__main-image');
-const capturePicture = popupPicture.querySelector('.form__picture-capture');
-
 const cardTemplate = document.querySelector('#card-template').content;
 const elementsItem = cardTemplate.querySelector('.elements__item');
 
-function openPopup(popup) {
-  popup.classList.add('popup_status_opened');
-}
-
-function closePopup(popup) {
-  popup.classList.remove('popup_status_opened');
-}
-
-function closeAllPopups() {
-  closePopup(popupEditProfile);
-  closePopup(popupAddCard);
-  closePopup(popupPicture);
-}
-
-function getCard(title, ref, alt) {
-  const userCard = elementsItem.cloneNode(true);
-  const cardImage = userCard.querySelector('.elements__image');
-  cardImage.src = ref;
-  cardImage.alt = alt;
-
-  userCard.querySelector('.elements__image-caption-text').textContent = title;
-
-  const heart = userCard.querySelector('.elements__heart');
-  heart.addEventListener('click', function (evt) {
-    heart.classList.toggle('elements__heart_status_disabled');
-  });
-
-  const trash = userCard.querySelector('.elements__trash');
-  trash.addEventListener('click', function (evt) {
-    cardContainer.removeChild(userCard);
-  });
-
-  cardImage.addEventListener('click', function (evt) {
-    openPopup(popupPicture);
-    mainImage.src = ref;
-    capturePicture.textContent = title;
-  });
-
-  return userCard;
-}
-
-function insertCard(card) {
-  cardContainer.prepend(card);
-}
+const popupBackgrounds = document.querySelectorAll('.popup__background')
 
 cardsInfo.forEach(function (item) {
-  insertCard(getCard(item.captionText, item.src, item.alt));
+  insertCard(getCard(item.captionText, item.src, item.alt, elementsItem));
 });
 
 closeButtonAddCardProfile.addEventListener('click', function (evt) {
@@ -150,7 +101,7 @@ formAddNewCard.addEventListener('submit', function (evt) {
   closePopup(popupAddCard);
   const name = fieldImageName.value.trim()
 
-  insertCard(getCard(name, fieldImageRef.value.trim(), name));
+  insertCard(getCard(name, fieldImageRef.value.trim(), name, elementsItem));
   fieldImageName.value = "";
   fieldImageRef.value = "";
 });
@@ -159,79 +110,15 @@ closeButtonPicture.addEventListener('click', function (evt) {
   closePopup(popupPicture);
 });
 
-const showInputError = (formElement, inputElement, errorMessage) => {
-  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.add('form__item_type_error');
-  errorElement.textContent = errorMessage;
-  errorElement.classList.add('form__item-error_active');
-};
-
-const hideInputError = (formElement, inputElement) => {
-  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.remove('form__item_type_error');
-  errorElement.classList.remove('form__item-error_active');
-  errorElement.textContent = '';
-};
-
-const hasInvalidInput = (inputList) => {
-  return inputList.some((inputElement) => {
-    return !inputElement.validity.valid;
-  })
-};
-
-const toggleButtonState = (inputList, buttonElement) => {
-  if (hasInvalidInput(inputList)) {
-    buttonElement.classList.add('form__submit-button_type_inactive');
-  } else {
-    buttonElement.classList.remove('form__submit-button_type_inactive');
-  }
-};
-
-const checkInputValidity = (formElement, inputElement) => {
-  if (!inputElement.validity.valid) {
-    showInputError(formElement, inputElement, inputElement.validationMessage);
-  } else {
-    hideInputError(formElement, inputElement);
-  }
-};
-
-const setEventListeners = (formElement) => {
-  const inputList = Array.from(formElement.querySelectorAll('.form__item'));
-  const buttonElement = formElement.querySelector('.form__submit-button');
-
-  toggleButtonState(inputList, buttonElement);
-
-  inputList.forEach((inputElement) => {
-    inputElement.addEventListener('input', function () {
-      checkInputValidity(formElement, inputElement);
-      toggleButtonState(inputList, buttonElement);
-    });
-  });
-};
-
-const enableValidation = () => {
-  const formList = [document.querySelector('.form_type_editprofile'),
-  document.querySelector('.form_type_addcard')];
-
-  formList.forEach((formElement) => {
-    formElement.addEventListener('submit', function (evt) {
-      evt.preventDefault();
-    });
-
-    const fieldsetList = Array.from(formElement.querySelectorAll('.form__input-container'));
-
-    fieldsetList.forEach((fieldSet) => {
-      setEventListeners(fieldSet);
-    });
-
-  });
-};
-
-enableValidation();
-
-//--------------------------------------------------
-
-const popupBackgrounds = document.querySelectorAll('.popup__background')
+enableValidation({
+  formSelector: '.form__input-card',
+  containerSelector: '.form__input-container',
+  inputSelector: '.form__item',
+  submitButtonSelector: '.form__submit-button',
+  inactiveButtonClass: 'form__submit-button_type_inactive',
+  inputErrorClass: 'form__item_type_error',
+  errorClass: 'form__item-error_active'
+});
 
 for (let i = 0; i < popupBackgrounds.length; ++i) {
   popupBackgrounds[i].addEventListener('click', function (evt) {
@@ -239,9 +126,5 @@ for (let i = 0; i < popupBackgrounds.length; ++i) {
   });
 }
 
-document.addEventListener('keydown', function (e) {
-  if (e.key == "Escape") {
-    closeAllPopups();
-  }
-});
+
 
