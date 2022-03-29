@@ -18,11 +18,19 @@ const hasInvalidInput = (inputList) => {
   })
 };
 
+function activateButton(buttonElement, inactiveButtonClass) {
+  buttonElement.classList.remove(inactiveButtonClass);
+}
+
+function deactivateButton(buttonElement, inactiveButtonClass) {
+  buttonElement.classList.add(inactiveButtonClass);
+}
+
 const toggleButtonState = (inputList, buttonElement, props) => {
   if (hasInvalidInput(inputList)) {
-    buttonElement.classList.add(props.inactiveButtonClass);
+    deactivateButton(buttonElement, props.inactiveButtonClass);
   } else {
-    buttonElement.classList.remove(props.inactiveButtonClass);
+    activateButton(buttonElement, props.inactiveButtonClass);
   }
 };
 
@@ -48,7 +56,7 @@ const setEventListeners = (formElement, props) => {
   });
 };
 
-export default function enableValidation(props) {
+function enableValidation(props) {
   const formList = Array.from(document.querySelectorAll(props.formSelector));
 
   formList.forEach((formElement) => {
@@ -65,4 +73,4 @@ export default function enableValidation(props) {
   });
 };
 
-
+export { deactivateButton, enableValidation }

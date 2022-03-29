@@ -5,6 +5,14 @@ const mainImage = popupPicture.querySelector('.form__main-image');
 const capturePicture = popupPicture.querySelector('.form__picture-capture');
 const cardContainer = document.querySelector('.elements__list');
 
+function toggleLike(element, elClass) {
+  element.classList.toggle(elClass);
+}
+
+function removeItem(container, item) {
+  container.removeChild(item);
+}
+
 function getCard(title, ref, alt, elementsItem) {
   const userCard = elementsItem.cloneNode(true);
   const cardImage = userCard.querySelector('.elements__image');
@@ -15,12 +23,12 @@ function getCard(title, ref, alt, elementsItem) {
 
   const heart = userCard.querySelector('.elements__heart');
   heart.addEventListener('click', function (evt) {
-    heart.classList.toggle('elements__heart_status_disabled');
+    toggleLike(evt.target, 'elements__heart_status_disabled');
   });
 
   const trash = userCard.querySelector('.elements__trash');
   trash.addEventListener('click', function (evt) {
-    cardContainer.removeChild(userCard);
+    removeItem(cardContainer, userCard);
   });
 
   cardImage.addEventListener('click', function (evt) {

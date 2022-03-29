@@ -22,10 +22,4 @@ function closePopup(popup) {
   document.removeEventListener('keydown', esc);
 }
 
-function closeAllPopups() {
-  closePopup(popupEditProfile);
-  closePopup(popupAddCard);
-  closePopup(popupPicture);
-}
-
-export { openPopup, closePopup, closeAllPopups, popupEditProfile, popupAddCard }
+export { openPopup, closePopup, popupEditProfile, popupAddCard }

@@ -2,9 +2,20 @@
   font-style: normal;
   font-weight: normal;
   font-size: 18px;
-  line-height: 22px;
+  line-height: 1.22;
   color: #FFFFFF;
   margin: 16px 0 0 0;
+
+  max-width: 495px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 1280px) {
+  .profile__subtitle {
+    max-width: 294px;
+  }
 }
 
 @media screen and (max-width: 1064px) {
@@ -12,6 +23,13 @@
     font-size: 14px;
     line-height: 121%;
     text-align: center;
-    margin: 14px 0 0 0;
+    margin: 14px auto 0 auto;
+    max-width: 495px;
+  }
+}
+
+@media screen and (max-width: 684px) {
+  .profile__subtitle {
+    max-width: 272px;
   }
 }

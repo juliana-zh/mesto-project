@@ -2,4 +2,21 @@
   width: 100%;
   object-fit: cover;
   border-radius: 10px 10px 0 0;
+  min-height: 282px;
+}
+
+.elements__image:hover {
+  cursor: pointer;
+}
+
+@media screen and (max-width: 1280px) {
+  .elements__image {
+    min-height: 83%;
+  }
+}
+
+@media screen and (max-width: 1064px) {
+  .elements__image {
+    min-height: 100px;
+  }
 }

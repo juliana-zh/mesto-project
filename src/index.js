@@ -1,47 +1,8 @@
 import './styles/index.css';
-import enableValidation from './components/validate.js'
+import { deactivateButton, enableValidation } from './components/validate.js'
 import { popupPicture, getCard, insertCard } from './components/card.js';
-import { openPopup, closePopup, closeAllPopups, popupEditProfile, popupAddCard } from './components/modal.js'
-
-const karachaevsk = new URL('./images/karachaevsk.jpg', import.meta.url);
-const mount_elbrus = new URL('./images/mount_elbrus.jpg', import.meta.url);
-const dombay = new URL('./images/dombay.jpg', import.meta.url);
-const amazonka = new URL('./images/amazonka.jpg', import.meta.url);
-const antarktida = new URL('./images/antarktida.jpg', import.meta.url);
-const karach_cherk = new URL('./images/karach-cherk.jpg', import.meta.url);
-
-const cardsInfo = [
-  {
-    src: karachaevsk,
-    alt: 'Старинное здание на фоне гор и лесов',
-    captionText: 'Карачаевск',
-  },
-  {
-    src: mount_elbrus,
-    alt: 'Поле, куст, и вдалеке виднеется гора',
-    captionText: 'Гора Эльбрус',
-  },
-  {
-    src: dombay,
-    alt: 'Горы, покрытые лесом, и на заднем фоне заснеженная вершина',
-    captionText: 'Домбай',
-  },
-  {
-    src: amazonka,
-    alt: 'Вид на реку Амазонку сверху',
-    captionText: 'Амазонка',
-  },
-  {
-    src: antarktida,
-    alt: 'Ледник и океан',
-    captionText: 'Антарктида',
-  },
-  {
-    src: karach_cherk,
-    alt: 'Озеро, в котором отражаются горы',
-    captionText: 'Карачаево-Черкесия',
-  },
-]
+import { openPopup, closePopup, popupEditProfile, popupAddCard } from './components/modal.js'
+import { cardsInfo } from './components/cards_initial.js';
 
 const profileTitle = document.querySelector('.profile__title');
 const profileSubtitle = document.querySelector('.profile__subtitle');
@@ -65,7 +26,10 @@ const formAddNewCard = document.querySelector('.form_type_addcard');
 const cardTemplate = document.querySelector('#card-template').content;
 const elementsItem = cardTemplate.querySelector('.elements__item');
 
-const popupBackgrounds = document.querySelectorAll('.popup__background')
+const popupBackgrounds = document.querySelectorAll('.popup__background');
+
+const INACTIVE_BUTTON_CLASS = 'form__submit-button_type_inactive';
+const SUBMIT_BUTTON_SELECTOR = '.form__submit-button';
 
 cardsInfo.forEach(function (item) {
   insertCard(getCard(item.captionText, item.src, item.alt, elementsItem));
@@ -104,6 +68,8 @@ formAddNewCard.addEventListener('submit', function (evt) {
   insertCard(getCard(name, fieldImageRef.value.trim(), name, elementsItem));
   fieldImageName.value = "";
   fieldImageRef.value = "";
+  const buttonElement = formAddNewCard.querySelector(SUBMIT_BUTTON_SELECTOR);
+  deactivateButton(buttonElement, INACTIVE_BUTTON_CLASS);
 });
 
 closeButtonPicture.addEventListener('click', function (evt) {
@@ -114,15 +80,16 @@ enableValidation({
   formSelector: '.form__input-card',
   containerSelector: '.form__input-container',
   inputSelector: '.form__item',
-  submitButtonSelector: '.form__submit-button',
-  inactiveButtonClass: 'form__submit-button_type_inactive',
+  submitButtonSelector: SUBMIT_BUTTON_SELECTOR,
+  inactiveButtonClass: INACTIVE_BUTTON_CLASS,
   inputErrorClass: 'form__item_type_error',
   errorClass: 'form__item-error_active'
 });
 
 for (let i = 0; i < popupBackgrounds.length; ++i) {
   popupBackgrounds[i].addEventListener('click', function (evt) {
-    closeAllPopups();
+    const curPopup = popupBackgrounds[i].closest('.popup');
+    closePopup(curPopup);
   });
 }
 
