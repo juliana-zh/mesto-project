@@ -2,8 +2,7 @@ import './styles/index.css';
 import { deactivateButton, enableValidation } from './components/validate.js'
 import { popupPicture, getCard, insertCard } from './components/card.js';
 import { openPopup, closePopup, popupEditProfile, popupAddCard } from './components/modal.js'
-import { cardsInfo } from './components/cards_initial.js';
-import { getInitialCards, getUserInfo, postCard } from './components/api.js';
+import { getInitialCards, getUserInfo, postCard, editProfile } from './components/api.js';
 
 const profileTitle = document.querySelector('.profile__title');
 const profileSubtitle = document.querySelector('.profile__subtitle');
@@ -50,8 +49,15 @@ editButton.addEventListener('click', function (evt) {
 formEditProfile.addEventListener('submit', function (evt) {
   evt.preventDefault();
   closePopup(popupEditProfile);
-  profileTitle.textContent = fieldName.value
-  profileSubtitle.textContent = fieldProfession.value;
+
+  editProfile(fieldName.value, fieldProfession.value)
+    .then((result) => {
+      profileTitle.textContent = result.name;
+      profileSubtitle.textContent = result.about;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 addNewCardButton.addEventListener('click', function (evt) {
@@ -61,11 +67,27 @@ addNewCardButton.addEventListener('click', function (evt) {
 formAddNewCard.addEventListener('submit', function (evt) {
   evt.preventDefault();
   closePopup(popupAddCard);
-  const name = fieldImageName.value.trim()
 
-  insertCard(getCard(name, fieldImageRef.value.trim(), name, elementsItem));
-  fieldImageName.value = "";
-  fieldImageRef.value = "";
+  const name = fieldImageName.value.trim();
+  const link = fieldImageRef.value.trim();
+
+  postCard(name, link)
+    .then((result) => {
+      insertCard(getCard(result.name,
+        result.link,
+        result.name,
+        elementsItem,
+        result.likes.length,
+        result.owner._id,
+        result.owner._id,
+        result._id));
+      fieldImageName.value = "";
+      fieldImageRef.value = "";
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
   const buttonElement = formAddNewCard.querySelector(SUBMIT_BUTTON_SELECTOR);
   deactivateButton(buttonElement, INACTIVE_BUTTON_CLASS);
 });
@@ -91,14 +113,6 @@ for (let i = 0; i < popupBackgrounds.length; ++i) {
   });
 }
 
-// postCard()
-//   .then((result) => {
-//     console.log(result);
-//   })
-//   .catch((err) => {
-//     console.log(err);
-//   });
-
 getUserInfo()
   .then((userInfo) => {
     profileTitle.textContent = userInfo.name;
@@ -110,7 +124,14 @@ getUserInfo()
         console.log(userInfo._id);
 
         cards.forEach(function (item) {
-          insertCard(getCard(item.name, item.link, item.name, elementsItem));
+          insertCard(getCard(item.name,
+            item.link,
+            item.name,
+            elementsItem,
+            item.likes.length,
+            userInfo._id,
+            item.owner._id,
+            item._id));
         });
       }
       );
