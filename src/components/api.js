@@ -87,4 +87,36 @@ const deleteCard = (cardId) => {
     });
 }
 
-export { getInitialCards, getUserInfo, postCard, editProfile, deleteCard }
+const likeCard = (cardId) => {
+  return fetch(`${baseUrl}/cards/likes/${cardId}`, {
+    method: 'PUT',
+    headers: {
+      authorization: auth
+    }
+  })
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      }
+
+      return Promise.reject(`Ошибка: ${res.status}`);
+    });
+}
+
+const dislikeCard = (cardId) => {
+  return fetch(`${baseUrl}/cards/likes/${cardId}`, {
+    method: 'DELETE',
+    headers: {
+      authorization: auth
+    }
+  })
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      }
+
+      return Promise.reject(`Ошибка: ${res.status}`);
+    });
+}
+
+export { getInitialCards, getUserInfo, postCard, editProfile, deleteCard, likeCard, dislikeCard }

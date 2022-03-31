@@ -77,7 +77,7 @@ formAddNewCard.addEventListener('submit', function (evt) {
         result.link,
         result.name,
         elementsItem,
-        result.likes.length,
+        result.likes,
         result.owner._id,
         result.owner._id,
         result._id));
@@ -128,7 +128,7 @@ getUserInfo()
             item.link,
             item.name,
             elementsItem,
-            item.likes.length,
+            item.likes,
             userInfo._id,
             item.owner._id,
             item._id));
