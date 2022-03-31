@@ -3,9 +3,11 @@ import { deactivateButton, enableValidation } from './components/validate.js'
 import { popupPicture, getCard, insertCard } from './components/card.js';
 import { openPopup, closePopup, popupEditProfile, popupAddCard } from './components/modal.js'
 import { cardsInfo } from './components/cards_initial.js';
+import { getInitialCards, getUserInfo, postCard } from './components/api.js';
 
 const profileTitle = document.querySelector('.profile__title');
 const profileSubtitle = document.querySelector('.profile__subtitle');
+const profileAvatar = document.querySelector('.profile__avatar');
 
 const closeButtonAddCardProfile = document.querySelector('.popup__close_type_addcard');
 const closeButtonEditProfile = document.querySelector('.popup__close_type_editprofile');
@@ -30,10 +32,6 @@ const popupBackgrounds = document.querySelectorAll('.popup__background');
 
 const INACTIVE_BUTTON_CLASS = 'form__submit-button_type_inactive';
 const SUBMIT_BUTTON_SELECTOR = '.form__submit-button';
-
-cardsInfo.forEach(function (item) {
-  insertCard(getCard(item.captionText, item.src, item.alt, elementsItem));
-});
 
 closeButtonAddCardProfile.addEventListener('click', function (evt) {
   closePopup(popupAddCard);
@@ -92,6 +90,38 @@ for (let i = 0; i < popupBackgrounds.length; ++i) {
     closePopup(curPopup);
   });
 }
+
+// postCard()
+//   .then((result) => {
+//     console.log(result);
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//   });
+
+getUserInfo()
+  .then((userInfo) => {
+    profileTitle.textContent = userInfo.name;
+    profileSubtitle.textContent = userInfo.about;
+    profileAvatar.src = userInfo.avatar;
+    return getInitialCards()
+      .then(cards => {
+        console.log(cards);
+        console.log(userInfo._id);
+
+        cards.forEach(function (item) {
+          insertCard(getCard(item.name, item.link, item.name, elementsItem));
+        });
+      }
+      );
+  })
+  .then(function (result) {
+    console.log(result);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
 
 
 
