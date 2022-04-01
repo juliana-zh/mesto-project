@@ -1,0 +1,12 @@
+.profile__avatar-wrapper {
+  width: 120px;
+  height: 120px;
+  position: relative;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 1064px) {
+  .profile__avatar-wrapper {
+    justify-self: center;
+  }
+}

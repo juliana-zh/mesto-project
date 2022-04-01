@@ -13,7 +13,7 @@
   color: #000000;
 }
 
-.form__item:last-of-type {
+.form__item:last-of-type:not(:first-of-type) {
   margin: 34px 0 0 0;
 }
 

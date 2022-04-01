@@ -1,8 +1,8 @@
 import './styles/index.css';
 import { deactivateButton, enableValidation } from './components/validate.js'
 import { popupPicture, getCard, insertCard } from './components/card.js';
-import { openPopup, closePopup, popupEditProfile, popupAddCard } from './components/modal.js'
-import { getInitialCards, getUserInfo, postCard, editProfile } from './components/api.js';
+import { openPopup, closePopup, popupEditProfile, popupAddCard, popupEditAvatar } from './components/modal.js'
+import { getInitialCards, getUserInfo, postCard, editProfile, editAvatar } from './components/api.js';
 
 const profileTitle = document.querySelector('.profile__title');
 const profileSubtitle = document.querySelector('.profile__subtitle');
@@ -11,9 +11,11 @@ const profileAvatar = document.querySelector('.profile__avatar');
 const closeButtonAddCardProfile = document.querySelector('.popup__close_type_addcard');
 const closeButtonEditProfile = document.querySelector('.popup__close_type_editprofile');
 const closeButtonPicture = document.querySelector('.popup__close_type_picture');
+const closeEditAvatar = document.querySelector('.popup__close_type_editavatar');
 
 const editButton = document.querySelector('.profile__edit-button');
 const addNewCardButton = document.querySelector('.profile__plus-button');
+const avatarEditButton = document.querySelector('.profile__avatar-wrapper');
 
 const fieldName = popupEditProfile.querySelector('.form__item_el_name');
 const fieldProfession = popupEditProfile.querySelector('.form__item_el_profession')
@@ -21,8 +23,11 @@ const fieldProfession = popupEditProfile.querySelector('.form__item_el_professio
 const fieldImageName = popupAddCard.querySelector('.form__item_el_title');
 const fieldImageRef = popupAddCard.querySelector('.form__item_el_ref');
 
+const fieldUrlAvatar = popupEditAvatar.querySelector('.form__item_el_avatar-ref');
+
 const formEditProfile = document.querySelector('.form_type_editprofile');
 const formAddNewCard = document.querySelector('.form_type_addcard');
+const formEditAvatar = document.querySelector('.form_type_editavatar');
 
 const cardTemplate = document.querySelector('#card-template').content;
 const elementsItem = cardTemplate.querySelector('.elements__item');
@@ -64,6 +69,10 @@ addNewCardButton.addEventListener('click', function (evt) {
   openPopup(popupAddCard);
 });
 
+avatarEditButton.addEventListener('click', function (evt) {
+  openPopup(popupEditAvatar);
+});
+
 formAddNewCard.addEventListener('submit', function (evt) {
   evt.preventDefault();
   closePopup(popupAddCard);
@@ -94,6 +103,10 @@ formAddNewCard.addEventListener('submit', function (evt) {
 
 closeButtonPicture.addEventListener('click', function (evt) {
   closePopup(popupPicture);
+});
+
+closeEditAvatar.addEventListener('click', function (evt) {
+  closePopup(popupEditAvatar);
 });
 
 enableValidation({
@@ -142,6 +155,20 @@ getUserInfo()
   .catch((err) => {
     console.log(err);
   });
+
+formEditAvatar.addEventListener('submit', function (evt) {
+  evt.preventDefault();
+  closePopup(popupEditAvatar);
+
+  editAvatar(fieldUrlAvatar.value)
+    .then((result) => {
+      profileAvatar.src = fieldUrlAvatar.value;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
 
 
 

@@ -2,6 +2,7 @@ import { popupPicture } from "./card.js";
 
 const popupEditProfile = document.querySelector('.popup_type_editprofile');
 const popupAddCard = document.querySelector('.popup_type_addcard');
+const popupEditAvatar = document.querySelector('.popup_type_editavatar');
 
 let curPopup;
 
@@ -22,4 +23,4 @@ function closePopup(popup) {
   document.removeEventListener('keydown', esc);
 }
 
-export { openPopup, closePopup, popupEditProfile, popupAddCard }
+export { openPopup, closePopup, popupEditProfile, popupAddCard, popupEditAvatar }

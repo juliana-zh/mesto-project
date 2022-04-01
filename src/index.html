@@ -17,8 +17,12 @@
     </header>
     <main class="content">
       <section class="profile">
-        <img src="<%=require('./images/avatar.jpg')%>" alt="Фотография исследователя Жака-Ив Кусто"
-          class="profile__avatar">
+        <div class="profile__avatar-wrapper">
+          <img src="<%=require('./images/avatar.jpg')%>" alt="Фотография исследователя Жака-Ив Кусто"
+            class="profile__avatar">
+          <div class="profile__avatar-background profile__avatar-background_status_disabled"></div>
+          <img src="<%=require('./images/pen.svg')%>" alt="Изображение ручки" class="profile__pen">
+        </div>
         <div class="profile__info">
           <div class="profile__title-wrapper">
             <h1 class="profile__title">
@@ -63,9 +67,9 @@
         </div>
       </form>
     </article>
-    <article class="popup form__input-card popup_type_editprofile">
+    <article class="popup popup_type_editprofile">
       <div class="popup__background"></div>
-      <form class="form form_type_editprofile" name="edit_profile">
+      <form class="form form__input-card form_type_editprofile" name="edit_profile">
         <button class="popup__close popup__close_type_editprofile" type="button">
         </button>
         <div class="form__main-container">
@@ -80,6 +84,24 @@
               minlength="2" maxlength="200" required id="profession-item">
             <span class="form__item-error form__item-error_type_second profession-item-error"></span>
             <button type="submit" class="form__submit-button form__submit-button_type_editprofile">Сохранить</button>
+          </fieldset>
+        </div>
+      </form>
+    </article>
+    <article class="popup popup_type_editavatar">
+      <div class="popup__background"></div>
+      <form class="form form__input-card form_type_editavatar" name="edit_avatar">
+        <button class="popup__close popup__close_type_editavatar" type="button">
+        </button>
+        <div class="form__main-container">
+          <h2 class="form__title">
+            Обновить аватар
+          </h2>
+          <fieldset class="form__input-container">
+            <input type="url" class="form__item form__item_el_avatar-ref" name="avatar-ref"
+              placeholder="Ссылка на аватарку" id="avatar-ref-item" required>
+            <span class="form__item-error form__item-error_type_first avatar-ref-item-error"></span>
+            <button type="submit" class="form__submit-button form__submit-button_type_editavatar">Сохранить</button>
           </fieldset>
         </div>
       </form>

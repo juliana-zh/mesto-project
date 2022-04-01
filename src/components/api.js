@@ -119,4 +119,21 @@ const dislikeCard = (cardId) => {
     });
 }
 
-export { getInitialCards, getUserInfo, postCard, editProfile, deleteCard, likeCard, dislikeCard }
+const editAvatar = (url) => {
+  return fetch(`${baseUrl}/users/me/avatar`, {
+    method: 'PATCH',
+    headers,
+    body: JSON.stringify({
+      avatar: url
+    })
+  })
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      }
+
+      return Promise.reject(`Ошибка: ${res.status}`);
+    });
+}
+
+export { getInitialCards, getUserInfo, postCard, editProfile, deleteCard, likeCard, dislikeCard, editAvatar }
