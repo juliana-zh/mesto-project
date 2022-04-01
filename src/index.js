@@ -53,7 +53,10 @@ editButton.addEventListener('click', function (evt) {
 
 formEditProfile.addEventListener('submit', function (evt) {
   evt.preventDefault();
-  closePopup(popupEditProfile);
+  console.log(evt.target);
+
+  const button = evt.target.querySelector(SUBMIT_BUTTON_SELECTOR);
+  button.textContent = "Сохранение...";
 
   editProfile(fieldName.value, fieldProfession.value)
     .then((result) => {
@@ -63,6 +66,9 @@ formEditProfile.addEventListener('submit', function (evt) {
     .catch((err) => {
       console.log(err);
     });
+
+  closePopup(popupEditProfile);
+  button.textContent = "Сохранить";
 });
 
 addNewCardButton.addEventListener('click', function (evt) {
@@ -75,7 +81,9 @@ avatarEditButton.addEventListener('click', function (evt) {
 
 formAddNewCard.addEventListener('submit', function (evt) {
   evt.preventDefault();
-  closePopup(popupAddCard);
+
+  const buttonElement = formAddNewCard.querySelector(SUBMIT_BUTTON_SELECTOR);
+  buttonElement.textContent = "Сохранение...";
 
   const name = fieldImageName.value.trim();
   const link = fieldImageRef.value.trim();
@@ -97,8 +105,9 @@ formAddNewCard.addEventListener('submit', function (evt) {
       console.log(err);
     });
 
-  const buttonElement = formAddNewCard.querySelector(SUBMIT_BUTTON_SELECTOR);
+  buttonElement.textContent = "Создать";
   deactivateButton(buttonElement, INACTIVE_BUTTON_CLASS);
+  closePopup(popupAddCard);
 });
 
 closeButtonPicture.addEventListener('click', function (evt) {
@@ -158,7 +167,8 @@ getUserInfo()
 
 formEditAvatar.addEventListener('submit', function (evt) {
   evt.preventDefault();
-  closePopup(popupEditAvatar);
+  const buttonElement = evt.target.querySelector(SUBMIT_BUTTON_SELECTOR);
+  buttonElement.textContent = "Сохранение...";
 
   editAvatar(fieldUrlAvatar.value)
     .then((result) => {
@@ -167,6 +177,9 @@ formEditAvatar.addEventListener('submit', function (evt) {
     .catch((err) => {
       console.log(err);
     });
+
+  closePopup(popupEditAvatar);
+  buttonElement.textContent = "Сохранить";
 });
 
 

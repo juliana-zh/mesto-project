@@ -3,6 +3,7 @@
   object-fit: cover;
   border-radius: 10px 10px 0 0;
   height: 282px;
+  display: inline-block;
 }
 
 .elements__image:hover {
