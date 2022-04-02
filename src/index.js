@@ -3,6 +3,7 @@ import { deactivateButton, enableValidation } from './components/validate.js'
 import { popupPicture, getCard, insertCard } from './components/card.js';
 import { openPopup, closePopup, popupEditProfile, popupAddCard, popupEditAvatar } from './components/modal.js'
 import { getInitialCards, getUserInfo, postCard, editProfile, editAvatar } from './components/api.js';
+import { INACTIVE_BUTTON_CLASS, SUBMIT_BUTTON_SELECTOR } from './components/constants.js'
 
 const profileTitle = document.querySelector('.profile__title');
 const profileSubtitle = document.querySelector('.profile__subtitle');
@@ -34,9 +35,6 @@ const elementsItem = cardTemplate.querySelector('.elements__item');
 
 const popupBackgrounds = document.querySelectorAll('.popup__background');
 
-const INACTIVE_BUTTON_CLASS = 'form__submit-button_type_inactive';
-const SUBMIT_BUTTON_SELECTOR = '.form__submit-button';
-
 closeButtonAddCardProfile.addEventListener('click', function (evt) {
   closePopup(popupAddCard);
 });
@@ -53,22 +51,22 @@ editButton.addEventListener('click', function (evt) {
 
 formEditProfile.addEventListener('submit', function (evt) {
   evt.preventDefault();
-  console.log(evt.target);
 
-  const button = evt.target.querySelector(SUBMIT_BUTTON_SELECTOR);
+  const button = evt.submitter;
   button.textContent = "Сохранение...";
 
   editProfile(fieldName.value, fieldProfession.value)
     .then((result) => {
       profileTitle.textContent = result.name;
       profileSubtitle.textContent = result.about;
+      closePopup(popupEditProfile);
     })
     .catch((err) => {
       console.log(err);
+    })
+    .finally(() => {
+      button.textContent = "Сохранить";
     });
-
-  closePopup(popupEditProfile);
-  button.textContent = "Сохранить";
 });
 
 addNewCardButton.addEventListener('click', function (evt) {
@@ -82,7 +80,7 @@ avatarEditButton.addEventListener('click', function (evt) {
 formAddNewCard.addEventListener('submit', function (evt) {
   evt.preventDefault();
 
-  const buttonElement = formAddNewCard.querySelector(SUBMIT_BUTTON_SELECTOR);
+  const buttonElement = evt.submitter;
   buttonElement.textContent = "Сохранение...";
 
   const name = fieldImageName.value.trim();
@@ -100,14 +98,15 @@ formAddNewCard.addEventListener('submit', function (evt) {
         result._id));
       fieldImageName.value = "";
       fieldImageRef.value = "";
+      closePopup(popupAddCard);
+      deactivateButton(buttonElement, INACTIVE_BUTTON_CLASS);
     })
     .catch((err) => {
       console.log(err);
+    })
+    .finally(() => {
+      buttonElement.textContent = "Создать";
     });
-
-  buttonElement.textContent = "Создать";
-  deactivateButton(buttonElement, INACTIVE_BUTTON_CLASS);
-  closePopup(popupAddCard);
 });
 
 closeButtonPicture.addEventListener('click', function (evt) {
@@ -135,51 +134,43 @@ for (let i = 0; i < popupBackgrounds.length; ++i) {
   });
 }
 
-getUserInfo()
-  .then((userInfo) => {
+Promise.all([getUserInfo(), getInitialCards()])
+  .then(([userInfo, cards]) => {
     profileTitle.textContent = userInfo.name;
     profileSubtitle.textContent = userInfo.about;
     profileAvatar.src = userInfo.avatar;
-    return getInitialCards()
-      .then(cards => {
-        console.log(cards);
-        console.log(userInfo._id);
 
-        cards.forEach(function (item) {
-          insertCard(getCard(item.name,
-            item.link,
-            item.name,
-            elementsItem,
-            item.likes,
-            userInfo._id,
-            item.owner._id,
-            item._id));
-        });
-      }
-      );
+    cards.forEach(function (item) {
+      insertCard(getCard(item.name,
+        item.link,
+        item.name,
+        elementsItem,
+        item.likes,
+        userInfo._id,
+        item.owner._id,
+        item._id));
+    });
   })
-  .then(function (result) {
-    console.log(result);
-  })
-  .catch((err) => {
+  .catch(err => {
     console.log(err);
   });
 
 formEditAvatar.addEventListener('submit', function (evt) {
   evt.preventDefault();
-  const buttonElement = evt.target.querySelector(SUBMIT_BUTTON_SELECTOR);
+  const buttonElement = evt.submitter;
   buttonElement.textContent = "Сохранение...";
 
   editAvatar(fieldUrlAvatar.value)
     .then((result) => {
       profileAvatar.src = fieldUrlAvatar.value;
+      closePopup(popupEditAvatar);
     })
     .catch((err) => {
       console.log(err);
+    })
+    .finally(() => {
+      buttonElement.textContent = "Сохранить";
     });
-
-  closePopup(popupEditAvatar);
-  buttonElement.textContent = "Сохранить";
 });
 
 
