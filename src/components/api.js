@@ -7,17 +7,19 @@ const headers = {
   'Content-Type': ctype
 }
 
+function checkResponse(res) {
+  if (res.ok) {
+    return res.json();
+  }
+
+  return Promise.reject(`Ошибка: ${res.status}`);
+}
+
 const getInitialCards = () => {
   return fetch(`${baseUrl}/cards`, {
     headers
   })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
+    .then(checkResponse);
 }
 
 const getUserInfo = () => {
@@ -26,13 +28,7 @@ const getUserInfo = () => {
       authorization: auth
     }
   })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-
-      return Promise.reject(`Ошибка: ${res.status}`);
-    });
+    .then(checkResponse);
 }
 
 const postCard = (name, link) => {
@@ -44,13 +40,7 @@ const postCard = (name, link) => {
       link: link
     })
   })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-
-      return Promise.reject(`Ошибка: ${res.status}`);
-    });
+    .then(checkResponse);
 }
 
 const editProfile = (name, about) => {
@@ -62,13 +52,7 @@ const editProfile = (name, about) => {
       about: about
     })
   })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-
-      return Promise.reject(`Ошибка: ${res.status}`);
-    });
+    .then(checkResponse);
 }
 
 const deleteCard = (cardId) => {
@@ -78,13 +62,7 @@ const deleteCard = (cardId) => {
       authorization: auth
     }
   })
-    .then(res => {
-      if (res.ok) {
-        return;
-      }
-
-      return Promise.reject(`Ошибка: ${res.status}`);
-    });
+    .then(checkResponse);
 }
 
 const likeCard = (cardId) => {
@@ -94,13 +72,7 @@ const likeCard = (cardId) => {
       authorization: auth
     }
   })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-
-      return Promise.reject(`Ошибка: ${res.status}`);
-    });
+    .then(checkResponse);
 }
 
 const dislikeCard = (cardId) => {
@@ -110,13 +82,7 @@ const dislikeCard = (cardId) => {
       authorization: auth
     }
   })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-
-      return Promise.reject(`Ошибка: ${res.status}`);
-    });
+    .then(checkResponse);
 }
 
 const editAvatar = (url) => {
@@ -127,13 +93,7 @@ const editAvatar = (url) => {
       avatar: url
     })
   })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-
-      return Promise.reject(`Ошибка: ${res.status}`);
-    });
+    .then(checkResponse);
 }
 
 export { getInitialCards, getUserInfo, postCard, editProfile, deleteCard, likeCard, dislikeCard, editAvatar }

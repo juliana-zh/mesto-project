@@ -23,7 +23,7 @@ function toZeroLikes(elem) {
   elem.classList.add('elements__num-heart_status_disabled')
 }
 
-function userVoted(userId, likes) {
+function checkUserLikes(userId, likes) {
   for (let i = 0; i < likes.length; ++i) {
     if (likes[i]._id == userId) {
       return true;
@@ -47,7 +47,7 @@ function getCard(title, ref, alt, elementsItem, likes, userId, cardOwnerId, card
 
   if (numLikes > 0) {
     showLikes(nLikesElem, numLikes);
-    if (userVoted(userId, likes)) {
+    if (checkUserLikes(userId, likes)) {
       heart.classList.remove('elements__heart_status_disabled')
     }
   }
@@ -95,6 +95,7 @@ function getCard(title, ref, alt, elementsItem, likes, userId, cardOwnerId, card
   cardImage.addEventListener('click', function (evt) {
     openPopup(popupPicture);
     mainImage.src = ref;
+    mainImage.alt = ref;
     capturePicture.textContent = title;
   });
 
