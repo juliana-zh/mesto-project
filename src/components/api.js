@@ -1,11 +1,3 @@
-// const baseUrl = 'https://nomoreparties.co/v1/plus-cohort-8';
-// const auth = '2757d6a3-540a-4ca9-92d6-16077071be59';
-// const ctype = 'application/json';
-
-// const headers = {
-//   authorization: auth,
-//   'Content-Type': ctype
-// }
 
 export default class Api {
   constructor(data) {
@@ -31,7 +23,7 @@ export default class Api {
     return fetch(`${this._url}/users/me`, {
       headers: this._headers
     })
-      .then(checkResponse);
+      .then(this._checkResponse);
   }
 
   postCard(name, link) {
@@ -43,7 +35,7 @@ export default class Api {
         link: link
       })
     })
-      .then(checkResponse);
+      .then(this._checkResponse);
   }
 
   editProfile(name, about) {
@@ -55,7 +47,7 @@ export default class Api {
         about: about
       })
     })
-      .then(checkResponse);
+      .then(this._checkResponse);
   }
 
   deleteCard(cardId) {
@@ -63,7 +55,7 @@ export default class Api {
       method: 'DELETE',
       headers: this._headers,
     })
-      .then(checkResponse);
+      .then(this._checkResponse);
   }
 
   likeCard(cardId) {
@@ -71,7 +63,7 @@ export default class Api {
       method: 'PUT',
       headers: this._headers,
     })
-      .then(checkResponse);
+      .then(this._checkResponse);
   }
 
   dislikeCard(cardId) {
@@ -90,7 +82,7 @@ export default class Api {
         avatar: avatarUrl
       })
     })
-      .then(checkResponse);
+      .then(this._checkResponse);
   }
 }
 
