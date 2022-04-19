@@ -1,45 +1,54 @@
-// import { openPopup } from "./modal.js";
-// import { deleteCard, likeCard, dislikeCard } from "./api.js"
-
-
 //data = {title, ref, alt, elementsItem, likes, userId, cardOwnerId, cardId}
 export default class Card {
-  construcor({data, }) {
+  constructor(data, selector) {
     this._ref = data.link;
     this._title = data.name;
     this._likes = data.likes;
     this._cardId = data.cardId;
     this._cardOwnerId = data.owner._id;
-    //?this.userId =
+    this._selector = selector;
+    //this.userId =
   }
 
   //!получение разметки
   _getTemlateElement() {
     const userCard = document
-    .querySelector('.card-template')
-    .content
-    .querySelector('.elements__item')
-    .cloneNode(true)
-
+      .querySelector(this._selector)
+      .content
+      .querySelector('.elements__item')
+      .cloneNode(true)
     return userCard
   }
 
   //!заполнение карточек данными
   generate() {
-    this._element = this.__getTemlateElement();
-    const cardImage = this._element.querySelector('.elements__image');
-    cardImage.src = this._ref;
-    cardImage.alt = this._title;
+    this._element = this._getTemlateElement();
+    this._hearth = this._element.querySelector('.elements__heart')
+    this._trash = this._element.querySelector('.elements__trash')
+    this._cardImage = this._element.querySelector('.elements__image');
+    this._cardImage.src = this._ref;//???
+    this._cardImage.alt = this._title;//???
     this._element.querySelector('.elements__image-caption-text').textContent = this._title;
-
-    //? ниже класс проверить
-    this.element.querySelector('.elements__num-heart').textContent = this._likes.length
-
+    this._element.querySelector('.elements__num-heart').textContent = this._likes.length
+    this._addCardListeners();
     return this._element
   }
 
   //!Добавление слушателей для карточек
   _addCardListeners() {
+    this._hearth.addEventListener('click', () => {
+
+    })
+
+    if (this._cardOwnerId === this.userId) {
+      this._trash.addEventListener('click', () => {
+
+      })
+    }
+
+    this._cardImage.addEventListener('click', () => {
+
+    })
 
   }
 
@@ -51,13 +60,10 @@ export default class Card {
 
 
 
-
-
-
 // const popupPicture = document.querySelector('.popup_type_picture');
 // const mainImage = popupPicture.querySelector('.form__main-image');
 // const capturePicture = popupPicture.querySelector('.form__picture-capture');
-// const cardContainer = document.querySelector('.elements__list');
+
 
 // function toggleLike(element, elClass) {
 //   element.classList.toggle(elClass);

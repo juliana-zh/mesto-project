@@ -1,5 +1,8 @@
 import '../styles/index.css';
-import Api from '../components/api.js'
+import { validationConfig, cardContainer } from '../utils/constants.js';
+import Api from '../components/Api.js';
+import Card from '../components/Card.js';
+import Section from '../components/Section.js'
 
 const api = new Api({
   url: 'https://nomoreparties.co/v1/plus-cohort-8',
@@ -8,6 +11,26 @@ const api = new Api({
     'Content-Type': 'application/json'
   }
 })
+
+api.getInitialCards()
+  .then(res => {
+    res.forEach(card => {
+      const newCard = new Card(card, '#card-template').generate()
+      cardContainer.append(newCard)
+
+    });
+  })
+
+
+
+  // const cardList = new Section({
+  //   renderer: (card) => {
+  //     cardList.setItem(newCard)
+  //   },
+  //   cardContainer
+  // })
+
+
 
 
 
