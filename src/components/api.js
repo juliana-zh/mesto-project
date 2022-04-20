@@ -67,11 +67,11 @@ export default class Api {
   }
 
   dislikeCard(cardId) {
-    return fetch(`${baseUrl}/cards/likes/${cardId}`, {
+    return fetch(`${this._url}/cards/likes/${cardId}`, {
       method: 'DELETE',
       headers: this._headers,
     })
-      .then(checkResponse);
+      .then(this._checkResponse);
   }
 
   editAvatar(avatarUrl) {

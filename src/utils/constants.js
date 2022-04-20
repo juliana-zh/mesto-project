@@ -30,6 +30,18 @@
 
 // export const popupBackgrounds = document.querySelectorAll('.popup__background');
 export const cardContainer = document.querySelector('.elements__list');
+export const elementsList = document.querySelector('.elements__list')
+export const myId = {
+  id: ''
+}
+
+export const config = {
+  url: 'https://nomoreparties.co/v1/plus-cohort-8',
+  headers: {
+    authorization: '2757d6a3-540a-4ca9-92d6-16077071be59',
+    'Content-Type': 'application/json'
+  }
+}
 
 
 // export const validationConfig = {

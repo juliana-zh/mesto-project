@@ -1,25 +1,30 @@
 import '../styles/index.css';
-import { validationConfig, cardContainer } from '../utils/constants.js';
-import Api from '../components/Api.js';
-import Card from '../components/Card.js';
-import Section from '../components/Section.js'
+import { elementsList, config, myId } from "../utils/constants.js";
 
-const api = new Api({
-  url: 'https://nomoreparties.co/v1/plus-cohort-8',
-  headers: {
-    authorization: '2757d6a3-540a-4ca9-92d6-16077071be59',
-    'Content-Type': 'application/json'
-  }
-})
+import Api from "../components/Api.js";
+import Card from "../components/Card.js";
+
+
+
+export const api = new Api(config)
 
 api.getInitialCards()
   .then(res => {
     res.forEach(card => {
-      const newCard = new Card(card, '#card-template').generate()
-      cardContainer.append(newCard)
+      elementsList.append(new Card({
+        data: card,
+        handleCardClick: () => {
 
+        },
+      }, '#card-template').generate())
     });
   })
+
+api.getUserInfo()
+  .then(res => {
+    myId.id = res._id
+  })
+
 
 
 
