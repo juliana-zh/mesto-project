@@ -2,7 +2,7 @@ import { config, myId } from "../utils/constants.js";
 import Api from "./Api.js";
 
 export default class Card {
-  constructor({ data, handleCardClick }, selector) {
+  constructor({ data, userId, handleCardClick }, selector) {
     this._ref = data.link;
     this._title = data.name;
     this._likes = data.likes;
@@ -10,7 +10,7 @@ export default class Card {
     this._cardOwnerId = data.owner._id;
     this._api = new Api(config);
     this._selector = selector;
-    this.userId = myId.id;
+    this._userId = userId;
     this._handleCardClick = handleCardClick;
   }
 
@@ -27,7 +27,7 @@ export default class Card {
   //!заполнение карточек данными
   generate() {
     this._element = this._getTemlateElement();
-    this._hearth = this._element.querySelector('.elements__heart');
+    this._heart = this._element.querySelector('.elements__heart');
     this._trash = this._element.querySelector('.elements__trash');
     this._cardImage = this._element.querySelector('.elements__image');
     this._cardCount = this._element.querySelector('.elements__num-heart');
@@ -39,11 +39,10 @@ export default class Card {
     this._cardCount.classList.remove('elements__num-heart_status_disabled')
 
     this._likes.forEach(like => {
-      if (like._id === this.userId) {
-        this._hearth.classList.remove('elements__heart_status_disabled')
+      if (like._id === this._userId) {
+        this._heart.classList.remove('elements__heart_status_disabled')
       }
     });
-
 
     this._addCardListeners();
     return this._element
@@ -51,11 +50,11 @@ export default class Card {
 
   //!Добавление слушателей для карточек
   _addCardListeners() {
-    this._hearth.addEventListener('click', (evt) => {
+    this._heart.addEventListener('click', (evt) => {
       if (evt.target.classList.contains('elements__heart_status_disabled')) {
         this._api.likeCard(this._cardId)
           .then((result) => {
-            this._hearth.classList.remove('elements__heart_status_disabled')
+            this._heart.classList.remove('elements__heart_status_disabled')
             this._cardCount.textContent = result.likes.length
           })
           .catch((err) => {
@@ -64,7 +63,7 @@ export default class Card {
       } else {
         this._api.dislikeCard(this._cardId)
           .then((result) => {
-            this._hearth.classList.add('elements__heart_status_disabled')
+            this._heart.classList.add('elements__heart_status_disabled')
             this._cardCount.textContent = result.likes.length
           })
           .catch((err) => {
@@ -73,7 +72,7 @@ export default class Card {
       }
     })
 
-    if (this._cardOwnerId === this.userId) {
+    if (this._cardOwnerId === this._userId) {
       this._trash.classList.remove('elements__trash_status_disabled')
       this._trash.addEventListener('click', () => {
         this._api.deleteCard(this._cardId)
@@ -85,13 +84,11 @@ export default class Card {
     } else {
       this._trash.remove()
     }
-    //!этот слушатель будет сделан после создания класса Popup.js
+
     this._cardImage.addEventListener('click', () => {
-      this._handleCardClick();
+      this._handleCardClick(this._ref, this._title);
     })
-
   }
-
 }
 
 
