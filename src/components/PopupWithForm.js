@@ -5,6 +5,10 @@ export default class PopupWithForm extends Popup {
     super(selector);
     this._handleSubmitForm = handleSubmitForm;
     this._form = this._popup.querySelector('.form');
+    this._submitHandler = evt => {
+      this._getInputValues();
+      this._handleSubmitForm(evt, ...this._fieldValues);
+    }
   }
 
   setProfileData(name, profession) {
@@ -18,10 +22,16 @@ export default class PopupWithForm extends Popup {
 
   setEventListeners() {
     super.setEventListeners();
-    this._form.addEventListener('submit', evt => {
-      this._getInputValues();
-      this._handleSubmitForm(evt, ...this._fieldValues);
-    });
+    this._form.addEventListener('submit', this._submitHandler);
+  }
+
+  close() {
+    super.close();
+    this._removeSubmitListener();
+  }
+
+  _removeSubmitListener() {
+    this._form.removeEventListener('submit', this._submitHandler);
   }
 
   clearInputs() {
