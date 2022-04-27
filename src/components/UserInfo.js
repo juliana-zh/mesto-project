@@ -1,8 +1,10 @@
-import { config, profileTitle, profileSubtitle, editButton } from "../utils/constants.js";
+import { config, profileTitle, profileSubtitle, editButton, INACTIVE_BUTTON_CLASS } from "../utils/constants.js";
 import Api from "./Api.js";
-import Card from './card.js'
-import { PopupWithForm, PopupWithImage } from "./popup.js";
-import Section from "./section.js"
+import Card from './Card.js'
+import PopupWithImage from "../components/PopupWithImage.js";
+import PopupWithForm from "../components/PopupWithForm.js";
+import Section from "./Section.js"
+import { deactivateButton } from "../utils/utils.js";
 
 export default class UserInfo {
   constructor(selectorName, selectorProfession, selectorAvatar) {
@@ -61,11 +63,13 @@ export default class UserInfo {
       const button = evt.submitter;
       button.textContent = "Сохранение...";
 
-      this._api.editProfile(title, profession)
+      this._api.editProfile(title.value, profession.value)
         .then((result) => {
           profileTitle.textContent = result.name;
           profileSubtitle.textContent = result.about;
           popupEditProfile.close();
+          deactivateButton(button, INACTIVE_BUTTON_CLASS);
+          popupEditProfile.clearInputs();
         })
         .catch((err) => {
           console.log(err);
@@ -75,9 +79,10 @@ export default class UserInfo {
         });
     });
 
-    editButton.addEventListener('click', function (evt) {
+    editButton.addEventListener('click', evt => {
       popupEditProfile.open();
       popupEditProfile.setEventListeners();
+      popupEditProfile.setProfileData(this._name.textContent, this._profession.textContent);
     });
   }
 }

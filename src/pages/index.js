@@ -5,11 +5,14 @@ import {
 } from "../utils/constants.js";
 
 import Api from "../components/Api.js";
-import Card from "../components/card.js";
-import UserInfo from '../components/user_info.js';
-import FormValidator from '../components/form_validator.js'
+import Card from "../components/Card.js";
+import UserInfo from '../components/UserInfo.js';
+import FormValidator from '../components/FormValidator.js'
 
-import { PopupWithImage, PopupWithForm } from "../components/popup.js";
+import PopupWithImage from "../components/PopupWithImage.js";
+import PopupWithForm from "../components/PopupWithForm.js";
+
+import { deactivateButton } from '../utils/utils.js';
 
 export const api = new Api(config)
 
@@ -23,10 +26,12 @@ const popupEditAvatar = new PopupWithForm('.popup_type_editavatar', function (ev
   const button = evt.submitter;
   button.textContent = "Сохранение...";
 
-  api.editAvatar(avatar)
+  api.editAvatar(avatar.value)
     .then((result) => {
-      profileAvatar.src = avatar;
+      profileAvatar.src = avatar.value;
       this.close();
+      deactivateButton(button, INACTIVE_BUTTON_CLASS);
+      this.clearInputs();
     })
     .catch((err) => {
       console.log(err);
@@ -47,20 +52,21 @@ const popupAddCard = new PopupWithForm('.popup_type_addcard', function (evt, tit
   const buttonElement = evt.submitter;
   buttonElement.textContent = "Сохранение...";
 
-  api.postCard(imageName, imageLink)
+  api.postCard(imageName.value, imageLink.value)
     .then((result) => {
       const card = new Card({
         data: result,
-        userId: this._userId,
+        userId: result.owner._id,
         handleCardClick: () => {
           const cardPopup = new PopupWithImage('.popup_type_picture');
           cardPopup.setEventListeners();
-          cardPopup.open(item.link, item.name);
+          cardPopup.open(result.link, result.name);
         },
       }, '#card-template').generate();
       cardContainer.prepend(card);
       this.close();
       deactivateButton(buttonElement, INACTIVE_BUTTON_CLASS);
+      this.clearInputs();
     })
     .catch((err) => {
       console.log(err);
