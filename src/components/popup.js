@@ -15,6 +15,7 @@ export default class Popup {
 
   close() {
     this._popup.classList.remove('popup_status_opened');
+    this._removeListener()
   }
 
   _handleEscClose() {
@@ -28,12 +29,15 @@ export default class Popup {
     });
   }
 
+  _removeListener() {
+    document.removeEventListener('keydown', this._escapeHandler)
+  }
+
   setEventListeners() {
     const closeButton = this._popup.querySelector('.popup__close');
     closeButton.addEventListener('click', evt => {
       this.close();
     });
-
     this._handleEscClose();
     this._handleBackgroundClose();
   }

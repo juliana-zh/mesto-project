@@ -34,7 +34,7 @@ const sectionHandler = (items, userId) => {
 }
 
 const userInfoSetter = () => {
-  const popupEditProfile = new PopupWithForm('.popup_type_editprofile', (evt, title, profession, avatar, imageName, imageRef) => {
+  const popupEditProfile = new PopupWithForm('.popup_type_editprofile', (evt, title, profession) => {
     evt.preventDefault();
 
     const button = evt.submitter;
@@ -67,7 +67,7 @@ const userInfo = new UserInfo('.profile__title', '.profile__subtitle', '.profile
 userInfo.getUserInfo();
 userInfo.setUserInfo();
 
-const popupEditAvatar = new PopupWithForm('.popup_type_editavatar', function (evt, title, profession, avatar, imageName, imageLink) {
+const popupEditAvatar = new PopupWithForm('.popup_type_editavatar', function (evt, avatar) {
   evt.preventDefault();
 
   const button = evt.submitter;
@@ -93,7 +93,7 @@ avatarEditButton.addEventListener('click', function (evt) {
   popupEditAvatar.setEventListeners();
 });
 
-const popupAddCard = new PopupWithForm('.popup_type_addcard', function (evt, title, profession, avatar, imageName, imageLink) {
+const popupAddCard = new PopupWithForm('.popup_type_addcard', function (evt, imageName, imageLink) {
   evt.preventDefault();
 
   const buttonElement = evt.submitter;
