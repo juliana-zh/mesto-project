@@ -1,14 +1,11 @@
-import { config } from "../utils/constants.js";
-import Api from "./Api.js";
-
 export default class Card {
-  constructor({ data, userId, handleCardClick }, selector) {
+  constructor({ data, userId, api, handleCardClick }, selector) {
     this._ref = data.link;
     this._title = data.name;
     this._likes = data.likes;
     this._cardId = data._id;
     this._cardOwnerId = data.owner._id;
-    this._api = new Api(config);
+    this._api = api;
     this._selector = selector;
     this._userId = userId;
     this._handleCardClick = handleCardClick;

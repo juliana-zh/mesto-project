@@ -1,4 +1,3 @@
-import { deactivateButton } from "../utils/utils.js";
 export default class FormValidator {
   constructor(props, formElement) {
     this._props = props;
@@ -28,7 +27,7 @@ export default class FormValidator {
 
     this._toggleButtonState = (inputList, buttonElement) => {
       if (this._hasInvalidInput(inputList)) {
-        deactivateButton(buttonElement, this._props.inactiveButtonClass);
+        FormValidator.deactivateButton(buttonElement, this._props.inactiveButtonClass);
       } else {
         this._activateButton(buttonElement);
       }
@@ -45,6 +44,11 @@ export default class FormValidator {
     fieldsetList.forEach((fieldSet) => {
       this._setEventListeners(fieldSet);
     });
+  }
+
+  static deactivateButton(buttonElement, inactiveButtonClass) {
+    buttonElement.classList.add(inactiveButtonClass);
+    buttonElement.setAttribute("disabled", "disabled");
   }
 
   _setEventListeners(formElement) {

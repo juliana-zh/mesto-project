@@ -6,17 +6,64 @@ import {
 
 import Api from "../components/Api.js";
 import Card from "../components/Card.js";
+import Section from '../components/Section.js';
 import UserInfo from '../components/UserInfo.js';
 import FormValidator from '../components/FormValidator.js'
 
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 
-import { deactivateButton } from '../utils/utils.js';
-
 export const api = new Api(config)
 
-const userInfo = new UserInfo('.profile__title', '.profile__subtitle', '.profile__avatar');
+const sectionHandler = (items, userId) => {
+  const section = new Section({
+    items: items,
+    renderer: item => {
+      return new Card({
+        data: item,
+        userId: userId,
+        handleCardClick: () => {
+          const cardPopup = new PopupWithImage('.popup_type_picture');
+          cardPopup.setEventListeners();
+          cardPopup.open(item.link, item.name);
+        },
+      }, '#card-template').generate()
+    }
+  }, '.elements__list');
+  section.renderItems();
+}
+
+const userInfoSetter = () => {
+  const popupEditProfile = new PopupWithForm('.popup_type_editprofile', (evt, title, profession, avatar, imageName, imageRef) => {
+    evt.preventDefault();
+
+    const button = evt.submitter;
+    button.textContent = "Сохранение...";
+
+    api.editProfile(title.value, profession.value)
+      .then((result) => {
+        profileTitle.textContent = result.name;
+        profileSubtitle.textContent = result.about;
+        popupEditProfile.close();
+        FormValidator.deactivateButton(button, INACTIVE_BUTTON_CLASS);
+        popupEditProfile.clearInputs();
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        button.textContent = "Сохранить";
+      });
+  });
+
+  editButton.addEventListener('click', evt => {
+    popupEditProfile.open();
+    popupEditProfile.setEventListeners();
+    popupEditProfile.setProfileData(profileTitle.textContent, profileSubtitle.textContent);
+  });
+}
+
+const userInfo = new UserInfo('.profile__title', '.profile__subtitle', '.profile__avatar', api, sectionHandler, userInfoSetter);
 userInfo.getUserInfo();
 userInfo.setUserInfo();
 
@@ -30,7 +77,7 @@ const popupEditAvatar = new PopupWithForm('.popup_type_editavatar', function (ev
     .then((result) => {
       profileAvatar.src = avatar.value;
       this.close();
-      deactivateButton(button, INACTIVE_BUTTON_CLASS);
+      FormValidator.deactivateButton(button, INACTIVE_BUTTON_CLASS);
       this.clearInputs();
     })
     .catch((err) => {
@@ -57,6 +104,7 @@ const popupAddCard = new PopupWithForm('.popup_type_addcard', function (evt, tit
       const card = new Card({
         data: result,
         userId: result.owner._id,
+        api: api,
         handleCardClick: () => {
           const cardPopup = new PopupWithImage('.popup_type_picture');
           cardPopup.setEventListeners();
@@ -65,7 +113,7 @@ const popupAddCard = new PopupWithForm('.popup_type_addcard', function (evt, tit
       }, '#card-template').generate();
       cardContainer.prepend(card);
       this.close();
-      deactivateButton(buttonElement, INACTIVE_BUTTON_CLASS);
+      FormValidator.deactivateButton(buttonElement, INACTIVE_BUTTON_CLASS);
       this.clearInputs();
     })
     .catch((err) => {
@@ -89,4 +137,7 @@ formValidatorEditProfile.enableValidation();
 
 const formValidatorEditAvatar = new FormValidator(validationConfig, formEditAvatar);
 formValidatorEditAvatar.enableValidation();
+
+
+
 
