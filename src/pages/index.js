@@ -22,6 +22,7 @@ const sectionHandler = (items, userId) => {
       return new Card({
         data: item,
         userId: userId,
+        api: api,
         handleCardClick: () => {
           const cardPopup = new PopupWithImage('.popup_type_picture');
           cardPopup.setEventListeners();
