@@ -43,21 +43,27 @@ function handleDelete(card) {
     .catch(err => console.log(err))
 }
 
+const cardPopup = new PopupWithImage('.popup_type_picture');
+cardPopup.setEventListeners();
+
+function createCard(item, userId) {
+  const cardElement = new Card({
+    data: item,
+    userId: userId,
+    handleCardClick: () => {
+      cardPopup.open(item.link, item.name);
+    },
+    handleLike,
+    handleDelete
+  }, '#card-template').generate()
+  return cardElement
+}
+
 const renderCards = (items, userId) => {
   const section = new Section({
     items: items,
     renderer: item => {
-      return new Card({
-        data: item,
-        userId: userId,
-        handleCardClick: () => {
-          const cardPopup = new PopupWithImage('.popup_type_picture');
-          cardPopup.setEventListeners();
-          cardPopup.open(item.link, item.name);
-        },
-        handleLike,
-        handleDelete
-      }, '#card-template').generate()
+      return createCard(item, userId);
     }
   }, '.elements__list');
   section.renderItems();
@@ -133,9 +139,9 @@ const popupEditAvatar = new PopupWithForm('.popup_type_editavatar', function (ev
       userInfo.setUserInfo({
         avatar: result.avatar
       });
-      this.close();
+      popupEditAvatar.close();
       FormValidator.deactivateButton(INACTIVE_BUTTON_CLASS, button);
-      this.clearInputs();
+      popupEditAvatar.clearInputs();
     })
     .catch((err) => {
       console.log(err);
@@ -153,21 +159,11 @@ const popupAddCard = new PopupWithForm('.popup_type_addcard', function (evt, dat
 
   api.postCard(data.title, data.ref)
     .then((result) => {
-      const card = new Card({
-        data: result,
-        userId: result.owner._id,
-        handleCardClick: () => {
-          const cardPopup = new PopupWithImage('.popup_type_picture');
-          cardPopup.setEventListeners();
-          cardPopup.open(result.link, result.name);
-        },
-        handleLike,
-        handleDelete
-      }, '#card-template').generate();
+      const card = createCard(result, result.owner_id);
       cardContainer.prepend(card);
-      this.close();
+      popupAddCard.close();
       FormValidator.deactivateButton(INACTIVE_BUTTON_CLASS, buttonElement);
-      this.clearInputs();
+      popupAddCard.clearInputs();
     })
     .catch((err) => {
       console.log(err);
