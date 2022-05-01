@@ -15,6 +15,34 @@ import PopupWithForm from "../components/PopupWithForm.js";
 
 export const api = new Api(config)
 
+function handleLike(evt, card) {
+  if (evt.target.classList.contains('elements__heart_status_disabled')) {
+    api.likeCard(card.getId())
+      .then((result) => {
+        card.updateLikesEnable(result);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  } else {
+    api.dislikeCard(card.getId())
+      .then((result) => {
+        card.updateLikesDisable(result);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+}
+
+function handleDelete(card) {
+  api.deleteCard(card.getId())
+    .then(() => {
+      card.removeElement();
+    })
+    .catch(err => console.log(err))
+}
+
 const sectionHandler = (items, userId) => {
   const section = new Section({
     items: items,
@@ -22,12 +50,13 @@ const sectionHandler = (items, userId) => {
       return new Card({
         data: item,
         userId: userId,
-        api: api,
         handleCardClick: () => {
           const cardPopup = new PopupWithImage('.popup_type_picture');
           cardPopup.setEventListeners();
           cardPopup.open(item.link, item.name);
         },
+        handleLike,
+        handleDelete
       }, '#card-template').generate()
     }
   }, '.elements__list');
@@ -46,7 +75,7 @@ const userInfoSetter = () => {
         profileTitle.textContent = result.name;
         profileSubtitle.textContent = result.about;
         popupEditProfile.close();
-        FormValidator.deactivateButton(button, INACTIVE_BUTTON_CLASS);
+        FormValidator.deactivateButton(INACTIVE_BUTTON_CLASS, button);
         popupEditProfile.clearInputs();
       })
       .catch((err) => {
@@ -78,7 +107,7 @@ const popupEditAvatar = new PopupWithForm('.popup_type_editavatar', function (ev
     .then((result) => {
       profileAvatar.src = avatar.value;
       this.close();
-      FormValidator.deactivateButton(button, INACTIVE_BUTTON_CLASS);
+      FormValidator.deactivateButton(INACTIVE_BUTTON_CLASS, button);
       this.clearInputs();
     })
     .catch((err) => {
@@ -105,16 +134,17 @@ const popupAddCard = new PopupWithForm('.popup_type_addcard', function (evt, ima
       const card = new Card({
         data: result,
         userId: result.owner._id,
-        api: api,
         handleCardClick: () => {
           const cardPopup = new PopupWithImage('.popup_type_picture');
           cardPopup.setEventListeners();
           cardPopup.open(result.link, result.name);
         },
+        handleLike,
+        handleDelete
       }, '#card-template').generate();
       cardContainer.prepend(card);
       this.close();
-      FormValidator.deactivateButton(buttonElement, INACTIVE_BUTTON_CLASS);
+      FormValidator.deactivateButton(INACTIVE_BUTTON_CLASS, buttonElement);
       this.clearInputs();
     })
     .catch((err) => {

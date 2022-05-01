@@ -1,14 +1,15 @@
 export default class Card {
-  constructor({ data, userId, api, handleCardClick }, selector) {
+  constructor({ data, userId, handleCardClick, handleLike, handleDelete }, selector) {
     this._ref = data.link;
     this._title = data.name;
     this._likes = data.likes;
     this._cardId = data._id;
     this._cardOwnerId = data.owner._id;
-    this._api = api;
     this._selector = selector;
     this._userId = userId;
     this._handleCardClick = handleCardClick;
+    this._handleLike = handleLike;
+    this._handleDelete = handleDelete;
   }
 
   //!получение разметки
@@ -45,38 +46,34 @@ export default class Card {
     return this._element
   }
 
+  getId() {
+    return this._cardId;
+  }
+
+  updateLikesEnable(result) {
+    this._heart.classList.remove('elements__heart_status_disabled')
+    this._cardCount.textContent = result.likes.length
+  }
+
+  updateLikesDisable(result) {
+    this._heart.classList.add('elements__heart_status_disabled')
+    this._cardCount.textContent = result.likes.length
+  }
+
+  removeElement() {
+    this._element.remove();
+  }
+
   //!Добавление слушателей для карточек
   _addCardListeners() {
     this._heart.addEventListener('click', (evt) => {
-      if (evt.target.classList.contains('elements__heart_status_disabled')) {
-        this._api.likeCard(this._cardId)
-          .then((result) => {
-            this._heart.classList.remove('elements__heart_status_disabled')
-            this._cardCount.textContent = result.likes.length
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      } else {
-        this._api.dislikeCard(this._cardId)
-          .then((result) => {
-            this._heart.classList.add('elements__heart_status_disabled')
-            this._cardCount.textContent = result.likes.length
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      }
+      this._handleLike(evt, this);
     })
 
     if (this._cardOwnerId === this._userId) {
       this._trash.classList.remove('elements__trash_status_disabled')
       this._trash.addEventListener('click', () => {
-        this._api.deleteCard(this._cardId)
-          .then(() => {
-            this._element.remove()
-          })
-          .catch(err => console.log(err))
+        this._handleDelete(this);
       })
     } else {
       this._trash.remove()

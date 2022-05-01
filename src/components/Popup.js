@@ -7,6 +7,8 @@ export default class Popup {
         this.close();
       }
     }
+    this._bg = this._popup.querySelector('.popup__background');
+    this._closeButton = this._popup.querySelector('.popup__close');
   }
 
   open() {
@@ -23,8 +25,7 @@ export default class Popup {
   }
 
   _handleBackgroundClose() {
-    const bg = this._popup.querySelector('.popup__background')
-    bg.addEventListener('click', evt => {
+    this._bg.addEventListener('click', () => {
       this.close();
     });
   }
@@ -34,8 +35,7 @@ export default class Popup {
   }
 
   setEventListeners() {
-    const closeButton = this._popup.querySelector('.popup__close');
-    closeButton.addEventListener('click', evt => {
+    this._closeButton.addEventListener('click', () => {
       this.close();
     });
     this._handleEscClose();
