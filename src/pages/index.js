@@ -89,9 +89,10 @@ const userInfoSetter = () => {
       });
   });
 
+  popupEditProfile.setEventListeners();
+
   editButton.addEventListener('click', evt => {
     popupEditProfile.open();
-    popupEditProfile.setEventListeners();
     popupEditProfile.setInputValues({
       name: profileTitle.textContent,
       profession: profileSubtitle.textContent
@@ -157,6 +158,9 @@ const popupAddCard = new PopupWithForm('.popup_type_addcard', function (evt, dat
     });
 });
 
+popupAddCard.setEventListeners();
+popupEditAvatar.setEventListeners();
+
 const formValidatorAddNewCard = new FormValidator(validationConfig, formAddNewCard);
 formValidatorAddNewCard.enableValidation();
 
@@ -165,13 +169,11 @@ formValidatorEditAvatar.enableValidation();
 
 addNewCardButton.addEventListener('click', function (evt) {
   popupAddCard.open();
-  popupAddCard.setEventListeners();
   formValidatorAddNewCard.resetValidation();
 });
 
 avatarEditButton.addEventListener('click', function (evt) {
   popupEditAvatar.open();
-  popupEditAvatar.setEventListeners();
   formValidatorEditAvatar.resetValidation();
 });
 
