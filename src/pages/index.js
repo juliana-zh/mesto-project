@@ -67,13 +67,13 @@ const formValidatorEditProfile = new FormValidator(validationConfig, formEditPro
 formValidatorEditProfile.enableValidation();
 
 const userInfoSetter = () => {
-  const popupEditProfile = new PopupWithForm('.popup_type_editprofile', (evt, title, profession) => {
+  const popupEditProfile = new PopupWithForm('.popup_type_editprofile', (evt, data) => {
     evt.preventDefault();
 
     const button = evt.submitter;
     button.textContent = "Сохранение...";
 
-    api.editProfile(title.value, profession.value)
+    api.editProfile(data.name, data.profession)
       .then((result) => {
         profileTitle.textContent = result.name;
         profileSubtitle.textContent = result.about;
@@ -92,7 +92,10 @@ const userInfoSetter = () => {
   editButton.addEventListener('click', evt => {
     popupEditProfile.open();
     popupEditProfile.setEventListeners();
-    popupEditProfile.setProfileData(profileTitle.textContent, profileSubtitle.textContent);
+    popupEditProfile.setInputValues({
+      name: profileTitle.textContent,
+      profession: profileSubtitle.textContent
+    });
     formValidatorEditProfile.resetValidation();
   });
 }
@@ -101,15 +104,15 @@ const userInfo = new UserInfo('.profile__title', '.profile__subtitle', '.profile
 userInfo.getUserInfo();
 userInfo.setUserInfo();
 
-const popupEditAvatar = new PopupWithForm('.popup_type_editavatar', function (evt, avatar) {
+const popupEditAvatar = new PopupWithForm('.popup_type_editavatar', function (evt, data) {
   evt.preventDefault();
 
   const button = evt.submitter;
   button.textContent = "Сохранение...";
 
-  api.editAvatar(avatar.value)
+  api.editAvatar(data['avatar-ref'])
     .then((result) => {
-      profileAvatar.src = avatar.value;
+      profileAvatar.src = result.avatar;
       this.close();
       FormValidator.deactivateButton(INACTIVE_BUTTON_CLASS, button);
       this.clearInputs();
@@ -122,13 +125,13 @@ const popupEditAvatar = new PopupWithForm('.popup_type_editavatar', function (ev
     });
 });
 
-const popupAddCard = new PopupWithForm('.popup_type_addcard', function (evt, imageName, imageLink) {
+const popupAddCard = new PopupWithForm('.popup_type_addcard', function (evt, data) {
   evt.preventDefault();
 
   const buttonElement = evt.submitter;
   buttonElement.textContent = "Сохранение...";
 
-  api.postCard(imageName.value, imageLink.value)
+  api.postCard(data.title, data.ref)
     .then((result) => {
       const card = new Card({
         data: result,
