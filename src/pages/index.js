@@ -63,6 +63,9 @@ const sectionHandler = (items, userId) => {
   section.renderItems();
 }
 
+const formValidatorEditProfile = new FormValidator(validationConfig, formEditProfile);
+formValidatorEditProfile.enableValidation();
+
 const userInfoSetter = () => {
   const popupEditProfile = new PopupWithForm('.popup_type_editprofile', (evt, title, profession) => {
     evt.preventDefault();
@@ -90,6 +93,7 @@ const userInfoSetter = () => {
     popupEditProfile.open();
     popupEditProfile.setEventListeners();
     popupEditProfile.setProfileData(profileTitle.textContent, profileSubtitle.textContent);
+    formValidatorEditProfile.resetValidation();
   });
 }
 
@@ -116,11 +120,6 @@ const popupEditAvatar = new PopupWithForm('.popup_type_editavatar', function (ev
     .finally(() => {
       button.textContent = "Сохранить";
     });
-});
-
-avatarEditButton.addEventListener('click', function (evt) {
-  popupEditAvatar.open();
-  popupEditAvatar.setEventListeners();
 });
 
 const popupAddCard = new PopupWithForm('.popup_type_addcard', function (evt, imageName, imageLink) {
@@ -155,19 +154,26 @@ const popupAddCard = new PopupWithForm('.popup_type_addcard', function (evt, ima
     });
 });
 
-addNewCardButton.addEventListener('click', function (evt) {
-  popupAddCard.open();
-  popupAddCard.setEventListeners();
-});
-
 const formValidatorAddNewCard = new FormValidator(validationConfig, formAddNewCard);
 formValidatorAddNewCard.enableValidation();
 
-const formValidatorEditProfile = new FormValidator(validationConfig, formEditProfile);
-formValidatorEditProfile.enableValidation();
-
 const formValidatorEditAvatar = new FormValidator(validationConfig, formEditAvatar);
 formValidatorEditAvatar.enableValidation();
+
+addNewCardButton.addEventListener('click', function (evt) {
+  popupAddCard.open();
+  popupAddCard.setEventListeners();
+  formValidatorAddNewCard.resetValidation();
+});
+
+avatarEditButton.addEventListener('click', function (evt) {
+  popupEditAvatar.open();
+  popupEditAvatar.setEventListeners();
+  formValidatorEditAvatar.resetValidation();
+});
+
+
+
 
 
 
