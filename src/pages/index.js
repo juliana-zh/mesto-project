@@ -43,7 +43,7 @@ function handleDelete(card) {
     .catch(err => console.log(err))
 }
 
-const sectionHandler = (items, userId) => {
+const renderCards = (items, userId) => {
   const section = new Section({
     items: items,
     renderer: item => {
@@ -66,44 +66,61 @@ const sectionHandler = (items, userId) => {
 const formValidatorEditProfile = new FormValidator(validationConfig, formEditProfile);
 formValidatorEditProfile.enableValidation();
 
-const userInfoSetter = () => {
-  const popupEditProfile = new PopupWithForm('.popup_type_editprofile', (evt, data) => {
-    evt.preventDefault();
-
-    const button = evt.submitter;
-    button.textContent = "Сохранение...";
-
-    api.editProfile(data.name, data.profession)
-      .then((result) => {
-        profileTitle.textContent = result.name;
-        profileSubtitle.textContent = result.about;
-        popupEditProfile.close();
-        FormValidator.deactivateButton(INACTIVE_BUTTON_CLASS, button);
-        popupEditProfile.clearInputs();
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        button.textContent = "Сохранить";
-      });
-  });
-
-  popupEditProfile.setEventListeners();
-
-  editButton.addEventListener('click', evt => {
-    popupEditProfile.open();
-    popupEditProfile.setInputValues({
-      name: profileTitle.textContent,
-      profession: profileSubtitle.textContent
-    });
-    formValidatorEditProfile.resetValidation();
-  });
+function handlerUserInfo() {
+  return api.getUserInfo();
 }
 
-const userInfo = new UserInfo('.profile__title', '.profile__subtitle', '.profile__avatar', api, sectionHandler, userInfoSetter);
-userInfo.getUserInfo();
-userInfo.setUserInfo();
+const userInfo = new UserInfo('.profile__title', '.profile__subtitle', '.profile__avatar', handlerUserInfo);
+
+const popupEditProfile = new PopupWithForm('.popup_type_editprofile', (evt, data) => {
+  evt.preventDefault();
+
+  const button = evt.submitter;
+  button.textContent = "Сохранение...";
+
+  api.editProfile(data.name, data.profession)
+    .then(() => {
+      popupEditProfile.close();
+      userInfo.setUserInfo({
+        name: data.name,
+        about: data.profession
+      });
+      FormValidator.deactivateButton(INACTIVE_BUTTON_CLASS, button);
+      popupEditProfile.clearInputs();
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      button.textContent = "Сохранить";
+    });
+});
+
+popupEditProfile.setEventListeners();
+
+editButton.addEventListener('click', () => {
+  popupEditProfile.open();
+  popupEditProfile.setInputValues({
+    name: profileTitle.textContent,
+    profession: profileSubtitle.textContent
+  });
+  formValidatorEditProfile.resetValidation();
+});
+
+Promise.all([userInfo.getUserInfo(), api.getInitialCards()])
+  .then(([userData, items]) => {
+    userInfo.setUserInfo({
+      name: userData.name,
+      about: userData.about
+    });
+    userInfo.setUserInfo({
+      avatar: userData.avatar
+    });
+    renderCards(items, userData._id);
+  })
+  .catch(err => {
+    console.log(err);
+  });
 
 const popupEditAvatar = new PopupWithForm('.popup_type_editavatar', function (evt, data) {
   evt.preventDefault();
@@ -113,7 +130,9 @@ const popupEditAvatar = new PopupWithForm('.popup_type_editavatar', function (ev
 
   api.editAvatar(data['avatar-ref'])
     .then((result) => {
-      profileAvatar.src = result.avatar;
+      userInfo.setUserInfo({
+        avatar: result.avatar
+      });
       this.close();
       FormValidator.deactivateButton(INACTIVE_BUTTON_CLASS, button);
       this.clearInputs();
