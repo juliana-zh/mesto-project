@@ -29,7 +29,7 @@ export default class FormValidator {
 
     this._toggleButtonState = () => {
       if (this._hasInvalidInput()) {
-        FormValidator.deactivateButton(this._props.inactiveButtonClass, this._buttonElement);
+        this.deactivateButton(this._props.inactiveButtonClass);
       } else {
         this._activateButton();
       }
@@ -51,9 +51,9 @@ export default class FormValidator {
     });
   }
 
-  static deactivateButton(inactiveButtonClass, buttonElement) {
-    buttonElement.classList.add(inactiveButtonClass);
-    buttonElement.setAttribute("disabled", "disabled");
+  deactivateButton(inactiveButtonClass) {
+    this._buttonElement.classList.add(inactiveButtonClass);
+    this._buttonElement.setAttribute("disabled", "disabled");
   }
 
   _setEventListeners() {
