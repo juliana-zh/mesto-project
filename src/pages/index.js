@@ -103,7 +103,7 @@ popupEditProfile.setEventListeners();
 
 editButton.addEventListener('click', () => {
   popupEditProfile.open();
-  formValidatorEditProfile.deactivateButton(INACTIVE_BUTTON_CLASS);
+  formValidatorEditProfile.deactivateButton();
   popupEditProfile.setInputValues({
     name: profileTitle.textContent,
     profession: profileSubtitle.textContent
@@ -132,7 +132,7 @@ formValidatorAddNewCard.enableValidation();
 const formValidatorEditAvatar = new FormValidator(validationConfig, formEditAvatar);
 formValidatorEditAvatar.enableValidation();
 
-const popupEditAvatar = new PopupWithForm('.popup_type_editavatar', function(evt, data) {
+const popupEditAvatar = new PopupWithForm('.popup_type_editavatar', function (evt, data) {
   evt.preventDefault();
 
   popupEditAvatar.renderLoading(true);
@@ -174,15 +174,15 @@ const popupAddCard = new PopupWithForm('.popup_type_addcard', function (evt, dat
 popupAddCard.setEventListeners();
 popupEditAvatar.setEventListeners();
 
-addNewCardButton.addEventListener('click', function() {
+addNewCardButton.addEventListener('click', function () {
   popupAddCard.open();
-  formValidatorAddNewCard.deactivateButton(INACTIVE_BUTTON_CLASS);
+  formValidatorAddNewCard.deactivateButton();
   formValidatorAddNewCard.resetValidation();
 });
 
-avatarEditButton.addEventListener('click', function() {
+avatarEditButton.addEventListener('click', function () {
   popupEditAvatar.open();
-  formValidatorEditAvatar.deactivateButton(INACTIVE_BUTTON_CLASS);
+  formValidatorEditAvatar.deactivateButton();
   formValidatorEditAvatar.resetValidation();
 });
 
