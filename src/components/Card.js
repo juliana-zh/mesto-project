@@ -64,6 +64,10 @@ export default class Card {
     this._element.remove();
   }
 
+  isLiked(evt) {
+    return !evt.target.classList.contains('elements__heart_status_disabled');
+  }
+
   //!Добавление слушателей для карточек
   _addCardListeners() {
     this._heart.addEventListener('click', (evt) => {

@@ -16,7 +16,7 @@ import PopupWithForm from "../components/PopupWithForm.js";
 export const api = new Api(config)
 
 function handleLike(evt, card) {
-  if (evt.target.classList.contains('elements__heart_status_disabled')) {
+  if (!card.isLiked(evt)) {
     api.likeCard(card.getId())
       .then((result) => {
         card.updateLikesEnable(result);
@@ -113,13 +113,7 @@ editButton.addEventListener('click', () => {
 
 Promise.all([userInfo.getUserInfo(), api.getInitialCards()])
   .then(([userData, items]) => {
-    userInfo.setUserInfo({
-      name: userData.name,
-      about: userData.about
-    });
-    userInfo.setUserInfo({
-      avatar: userData.avatar
-    });
+    userInfo.setUserInfo(userData);
     renderCards(items, userData._id);
   })
   .catch(err => {
