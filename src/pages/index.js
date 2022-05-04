@@ -59,15 +59,12 @@ function createCard(item, userId) {
   return cardElement
 }
 
-const renderCards = (items, userId) => {
-  const section = new Section({
-    items: items,
-    renderer: item => {
-      return createCard(item, userId);
-    }
-  }, '.elements__list');
-  section.renderItems();
-}
+const section = new Section({
+  renderer: (item, userId) => {
+    return createCard(item, userId);
+  }
+}, '.elements__list');
+
 
 const formValidatorEditProfile = new FormValidator(validationConfig, formEditProfile);
 formValidatorEditProfile.enableValidation();
@@ -114,7 +111,7 @@ editButton.addEventListener('click', () => {
 Promise.all([userInfo.getUserInfo(), api.getInitialCards()])
   .then(([userData, items]) => {
     userInfo.setUserInfo(userData);
-    renderCards(items, userData._id);
+    section.renderItems(items, userData._id);
   })
   .catch(err => {
     console.log(err);
@@ -154,7 +151,7 @@ const popupAddCard = new PopupWithForm('.popup_type_addcard', function (evt, dat
   api.postCard(data.title, data.ref)
     .then((result) => {
       const card = createCard(result, result.owner_id);
-      cardContainer.prepend(card);
+      section.addItem(card);
       popupAddCard.close();
     })
     .catch((err) => {
