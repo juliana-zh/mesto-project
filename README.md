@@ -8,3 +8,9 @@ HTML, CSS, Javascript, БЭМ. Адаптивная верстка, grid.
 
 ## Ссылка
 https://juliana-zh.github.io/mesto-project
+
+juliana-zh@yandex.ru
+AlexanderSHV@yandex.ru
+
+https://github.com/juliana-zh
+https://github.com/TakeYourEnergy
