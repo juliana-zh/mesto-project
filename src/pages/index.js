@@ -1,7 +1,6 @@
 import '../styles/index.css';
 import {
-  cardContainer, config, addNewCardButton, profileTitle, profileSubtitle, editButton, avatarEditButton, profileAvatar, INACTIVE_BUTTON_CLASS,
-  formAddNewCard, validationConfig, formEditProfile, formEditAvatar
+  config, addNewCardButton, editButton, avatarEditButton, formAddNewCard, validationConfig, formEditProfile, formEditAvatar
 } from "../utils/constants.js";
 
 import Api from "../components/Api.js";
@@ -101,10 +100,17 @@ popupEditProfile.setEventListeners();
 editButton.addEventListener('click', () => {
   popupEditProfile.open();
   formValidatorEditProfile.deactivateButton();
-  popupEditProfile.setInputValues({
-    name: profileTitle.textContent,
-    profession: profileSubtitle.textContent
-  });
+  userInfo.getUserInfo()
+    .then((userData) => {
+      popupEditProfile.setInputValues({
+        name: userData.name,
+        profession: userData.about
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+
   formValidatorEditProfile.resetValidation();
 });
 
