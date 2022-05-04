@@ -99,7 +99,6 @@ popupEditProfile.setEventListeners();
 
 editButton.addEventListener('click', () => {
   popupEditProfile.open();
-  formValidatorEditProfile.deactivateButton();
   userInfo.getUserInfo()
     .then((userData) => {
       popupEditProfile.setInputValues({
@@ -156,7 +155,7 @@ const popupAddCard = new PopupWithForm('.popup_type_addcard', function (evt, dat
 
   api.postCard(data.title, data.ref)
     .then((result) => {
-      const card = createCard(result, result.owner_id);
+      const card = createCard(result, result.owner._id);
       section.addItem(card);
       popupAddCard.close();
     })
@@ -173,13 +172,11 @@ popupEditAvatar.setEventListeners();
 
 addNewCardButton.addEventListener('click', function () {
   popupAddCard.open();
-  formValidatorAddNewCard.deactivateButton();
   formValidatorAddNewCard.resetValidation();
 });
 
 avatarEditButton.addEventListener('click', function () {
   popupEditAvatar.open();
-  formValidatorEditAvatar.deactivateButton();
   formValidatorEditAvatar.resetValidation();
 });
 
